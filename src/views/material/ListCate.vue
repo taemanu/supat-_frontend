@@ -130,7 +130,7 @@
                 </div>
 
 
-				<!-- Modal -->
+				<!-- Modal xx -->
 				<div class="modal fade" id="viewUser" tabindex="-1" aria-labelledby="viewUserLabel" aria-hidden="true">
 					<div class="modal-dialog modal-lg">
 						<div class="modal-content">
