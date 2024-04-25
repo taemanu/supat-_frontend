@@ -1,0 +1,12 @@
+
+  @font-face {
+    font-family: 'Kanit';
+    src: url('../../assets/fonts/kanits/Kanit-Regular.ttf') format('truetype'); 
+    font-weight: normal;
+    font-style: normal;
+  }
+
+
+  body {
+    font-family: 'Kanit' !important;  /* ใช้ฟอนต์ Gemini ทั้งหมดในโปรเจกต์ */
+  }
