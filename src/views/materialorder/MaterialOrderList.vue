@@ -24,8 +24,13 @@
               <td class="text-center">{{ order.date }}</td>
               <td class="text-center">{{ formatPrice(order.price) }}</td>
               <td class="text-center">
-                <span class="me-2">✓</span>
-                <span>✗</span>
+                <button type="button" class="btn btn-primary me-2">
+                  <i class="fas fa-plus"></i> อนุมัติ
+                </button>
+
+                <button type="button" class="btn btn-danger">
+                  <i class="fas fa-plus"></i> ไม่อนุมัติ
+                </button>
               </td>
             </tr>
           </tbody>
