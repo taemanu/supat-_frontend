@@ -25,10 +25,10 @@
     </div>
   </nav>
 </template>
-  
-  <style></style>
-  
-  <script>
+
+<style></style>
+
+<script>
 import { ref, computed } from "vue";
 import { useRouter } from "vue-router";
 
@@ -72,6 +72,16 @@ export default {
         icon: "bi bi-database",
         url: "#",
       },
+      {
+        name: "ใบสั่งซื้อวัสดุ",
+        icon: "bi bi-database",
+        url: "/app/materialorderList",
+      },
+      {
+        name: "โครงการ",
+        icon: "bi bi-database",
+        url: "/app/ProjectList",
+      },
     ];
     function resetMenu(key) {
       let el = document.querySelectorAll(".sidebar-item");
@@ -85,4 +95,3 @@ export default {
   },
 };
 </script>
-  
