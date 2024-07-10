@@ -15,6 +15,10 @@ import Profile from "../views/profile/Profile.vue";
 import CateMaterial from "../views/material/ListCate.vue";
 import MaterialOrder from "../views/materialorder/materialorderList.vue";
 import ProjectList from "../views/project/ProjectList.vue";
+import MonthlyEmployeeReport from "../views/employee/MonthlyEmployeeReport.vue";
+import Quotation from "../views/customer/Quotation.vue";
+import FinancialList from "../views/financial/FinancialList.vue";
+import EmployeeList from "../views/employee/EmployeeList.vue";
 
 const routes = [
   {
@@ -81,6 +85,30 @@ const routes = [
         path: "/app/ProjectList",
         name: "ProjectList",
         component: ProjectList,
+      },
+
+      {
+        path: "/app/MonthlyEmployeeReport",
+        name: "MonthlyEmployeeReport",
+        component: MonthlyEmployeeReport,
+      },
+
+      {
+        path: "/app/Quotation",
+        name: "Quotation",
+        component: Quotation,
+      },
+
+      {
+        path: "/app/FinancialList",
+        name: "FinancialList",
+        component: FinancialList,
+      },
+
+      {
+        path: "/app/EmployeeList",
+        name: "EmployeeList",
+        component: EmployeeList,
       },
     ],
   },

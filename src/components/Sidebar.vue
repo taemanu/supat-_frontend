@@ -74,13 +74,33 @@ export default {
       },
       {
         name: "ใบสั่งซื้อวัสดุ",
-        icon: "bi bi-database",
+        icon: "bi bi-card-checklist",
         url: "/app/materialorderList",
       },
       {
         name: "โครงการ",
-        icon: "bi bi-database",
+        icon: "bi bi-kanban-fill",
         url: "/app/ProjectList",
+      },
+      {
+        name: "รายงานเงินเดือน",
+        icon: "bi bi-newspaper",
+        url: "/app/MonthlyEmployeeReport",
+      },
+      {
+        name: "ใบเสนอราคา",
+        icon: "bi bi-receipt",
+        url: "/app/Quotation",
+      },
+      {
+        name: "ข้อมูลการเงิน",
+        icon: "bi bi-cash-coin",
+        url: "/app/FinancialList",
+      },
+      {
+        name: "ข้อมูลพนักงาน",
+        icon: "bi bi-person-lines-fill",
+        url: "/app/EmployeeList",
       },
     ];
     function resetMenu(key) {
