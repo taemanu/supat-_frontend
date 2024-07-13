@@ -282,7 +282,7 @@ export default {
 
         onMounted(() => {
             const ctx = document.getElementById("chartjs-dashboard-line").getContext("2d");
-            var gradient = ctx.createLinearGradient(0, 0, 0, 225);
+            let gradient = ctx.createLinearGradient(0, 0, 0, 225);
             gradient.addColorStop(0, "rgba(215, 227, 244, 1)");
             gradient.addColorStop(1, "rgba(215, 227, 244, 0)");
 
