@@ -11,7 +11,7 @@
                 <!-- <router-link class="btn btn-success" ><i class="fas fa-check"></i> เพิ่มข้อมูล</router-link> -->
 
 				<router-link class="btn btn-success pt-2" to="/app/FormCustomer">
-                	<i class="fas fa-check"></i>เพิ่มข้อมูล
+                	<i class="bi bi-plus"></i>เพิ่มข้อมูล
 				</router-link>
             </div>
             <div class="row">
@@ -29,83 +29,46 @@
 												<th class="text-center align-middle" width="12%" scope="col">เลขประจำตัวผู้เสียภาษี</th>
 												<th class="text-center align-middle" width="12%" scope="col">ชื่อ - นามสกุล</th>
 												<th class="text-center align-middle" scope="col">เบอร์โทรศัพท์</th>
-												<th class="text-center align-middle" scope="col">E-mail</th>
-												<th class="text-center align-middle" scope="col">ที่อยู่</th>
+												<!-- <th class="text-center align-middle" scope="col">E-mail</th>
+												<th class="text-center align-middle" scope="col">ที่อยู่</th> -->
+												<th class="text-center align-middle" scope="col">จำนวนจ้างงาน</th>
 												<th class="text-center align-middle" scope="col">สถานะ</th>
 												<th class="text-center " width="15%" scope="col">จัดการ</th>
 	
 											</tr>
 										</thead>
 										<tbody>
-											<tr>
+											<tr  v-for="(list,index) in customer_store.data_list" :key="index">
 												<th class="text-center align-middle" scope="row">
+													{{ index + 1  }}
+												</th>
+												<td class="text-center align-middle">
+													<img src="../../assets/img/avatars/avatar-2.jpg" width="56" height="56" class="rounded-circle me-2" alt="Vanessa Tucker">
+												</td>
+												<td class="text-center align-middle">
+													CS-00{{list.id}}
+												</td>
+												<td class="text-left align-middle">
+													{{list.id_tax}}
+												</td>
+												<td class="text-left align-middle">
+													{{list.firstname +' '+ list.lastname}}
+												</td>
+												<td class="text-center align-middle">
+													{{list.tel}}
+												</td>
+												<!-- <td class="text-center align-middle">
+													{{list.email}}
+												</td>
+												<td class="text-left align-middle">
+													{{list.address}}
+												</td> -->
+												<td class="text-center align-middle">
 													1
-												</th>
-												<td class="text-center align-middle">
-													<img src="../../assets/img/avatars/avatar-2.jpg" width="56" height="56" class="rounded-circle me-2" alt="Vanessa Tucker">
 												</td>
 												<td class="text-center align-middle">
-													CS-001
-												</td>
-												<td class="text-left align-middle">
-													12314532542123
-												</td>
-												<td class="text-left align-middle">
-													นาย ภานุพงษ์ เทพเมือง
-												</td>
-												<td class="text-center align-middle">
-													0890000000
-												</td>
-												<td class="text-center align-middle">
-													Customer01@gmail.com
-												</td>
-												<td class="text-left align-middle">
-													17/4 หมู่ 5 ถนนบำรุงราษฎร์ ตำบลพิบูลสงคราม อำเภอเมือง กรุงเทพมหานคร 10400.
-												</td>
-												<td class="text-center align-middle">
-													<span class="btn btn-success">ปกติ</span>
-												</td>
-												<td class="text-center align-middle">
-
-													<button type="button" class="btn btn-info m-1 btn-equal-size" data-bs-toggle="modal" data-bs-target="#viewUser">
-														<i class="bi bi-eye"></i>
-														ดูข้อมูล
-													</button>
-
-													<button type="button" class="btn btn-warning m-1 btn-equal-size">
-														<i class="bi bi-pencil-square"></i>
-														แก้ไข
-													</button>
-												</td>
-											</tr>
-
-											<tr>
-												<th class="text-center align-middle" scope="row">
-													2
-												</th>
-												<td class="text-center align-middle">
-													<img src="../../assets/img/avatars/avatar-2.jpg" width="56" height="56" class="rounded-circle me-2" alt="Vanessa Tucker">
-												</td>
-												<td class="text-center align-middle">
-													CS-002
-												</td>
-												<td class="text-left align-middle">
-													12314532542123
-												</td>
-												<td class="text-left align-middle">
-													นาย ภานุพงษ์ เทพเมือง
-												</td>
-												<td class="text-center align-middle">
-													0890000000
-												</td>
-												<td class="text-center align-middle">
-													Customer02@gmail.com
-												</td>
-												<td class="text-left align-middle">
-													17/4 หมู่ 5 ถนนบำรุงราษฎร์ ตำบลพิบูลสงคราม อำเภอเมือง กรุงเทพมหานคร 10400.
-												</td>
-												<td class="text-center align-middle">
-													<span class="btn btn-success">ปกติ</span>
+													<span class="btn btn-success btn-equal-size" v-if="list.status == 'active'">ใช้งาน</span>
+													<span class="btn btn-danger btn-equal-size" v-else>ไม่ใช้งาน</span>
 												</td>
 												<td class="text-center align-middle">
 
@@ -178,6 +141,27 @@
     </main>
 </template>
 <script setup>
+import { ref, reactive, computed, watch ,onMounted } from "vue";
+import { userAuthStore } from "@/stores/models/userAuthStore";
+import { customerStore } from "@/stores/models/customerStore";
+import { useRouter } from "vue-router";
+import axios from "axios";
+import Swal from "sweetalert2";
+
+const customer_store = customerStore();
+const router = useRouter();
+
+const headers = {
+    headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("access_token")}`,
+    },
+}
+
+onMounted(async() => {
+    await customer_store.getDataList();
+});
+
 </script>
 <style>
     

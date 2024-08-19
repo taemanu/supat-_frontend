@@ -47,31 +47,31 @@ export default {
         icon: "bi bi-person",
         url: "/app/customer",
       },
-      {
-        name: "ผู้ใช้งานระบบ",
-        icon: "bi bi-people",
-        url: "/app/user",
-      },
-      {
-        name: "โปรไฟล์",
-        icon: "bi bi-person-lines-fill",
-        url: "/app/profile",
-      },
-      {
-        name: "ประเภทวัสดุ",
-        icon: "bi bi-boxes",
-        url: "/app/listCate",
-      },
-      {
-        name: "วัสดุ",
-        icon: "bi bi-box-seam-fill",
-        url: "#",
-      },
-      {
-        name: "จัดการคลังวัสดุ",
-        icon: "bi bi-database",
-        url: "#",
-      },
+      // {
+      //   name: "ผู้ใช้งานระบบ",
+      //   icon: "bi bi-people",
+      //   url: "/app/user",
+      // },
+      // {
+      //   name: "โปรไฟล์",
+      //   icon: "bi bi-person-lines-fill",
+      //   url: "/app/profile",
+      // },
+      // {
+      //   name: "ประเภทวัสดุ",
+      //   icon: "bi bi-boxes",
+      //   url: "/app/listCate",
+      // },
+      // {
+      //   name: "วัสดุ",
+      //   icon: "bi bi-box-seam-fill",
+      //   url: "#",
+      // },
+      // {
+      //   name: "จัดการคลังวัสดุ",
+      //   icon: "bi bi-database",
+      //   url: "#",
+      // },
       {
         name: "ใบสั่งซื้อวัสดุ",
         icon: "bi bi-card-checklist",

@@ -1,80 +1,97 @@
+<style>
+	.btn-equal-size {
+		width: 90px;
+	}
+</style>
 <template>
-  <div class="card">
-    <div class="card-body">
-      <h1 class="h3 mb-4"><strong>โครงการ</strong></h1>
 
-      <h2 class="h4 mb-3">โครงการที่กำลังดำเนินการ</h2>
-      <div class="table-responsive mb-4">
-        <table class="table table-bordered mb-0">
-          <thead>
-            <tr>
-              <th class="text-center">รหัสโครงการ</th>
-              <th class="text-center">เลขใบเสนอราคา</th>
-              <th class="text-center">ชื่อโครงการ</th>
-              <th class="text-center">วันที่เริ่มสัญญา</th>
-              <th class="text-center">กำหนดส่งงาน</th>
-              <th class="text-center">แบบงาน</th>
-              <th class="text-center">การอนุมัติ</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr v-for="project in ongoingProjects" :key="project.id">
-              <td class="text-center">{{ project.id }}</td>
-              <td class="text-center">{{ project.quoteId }}</td>
-              <td>{{ project.name }}</td>
-              <td class="text-center">{{ project.startDate }}</td>
-              <td class="text-center">{{ project.dueDate }}</td>
-              <td class="text-center">{{ project.blueprint }}</td>
-              <td class="text-center">
-                <button type="button" class="btn btn-primary me-2">
-                  <i class="fas fa-plus"></i> อนุมัติ
-                </button>
-
-                <button type="button" class="btn btn-danger">
-                  <i class="fas fa-plus"></i> ไม่อนุมัติ
-                </button>
-              </td>
-            </tr>
-          </tbody>
-        </table>
+  <main class="content">
+      <div class="container-fluid p-0 ">
+        <div class="d-flex justify-content-between m-2" >
+          <h1 class="h3 mb-4"><strong>โครงการ</strong></h1>
+          <button type="button" class="btn btn-success pt-2">
+              <i class="bi bi-plus"></i>สร้างโครงการ
+          </button>
+        </div>
       </div>
-
-      <h2 class="h4 mb-3">โครงการทั้งหมด</h2>
-      <p class="text-danger mb-2">คลิกที่ชื่อโครงการเพื่อดูความก้าวหน้า</p>
-      <div class="table-responsive">
-        <table class="table table-bordered mb-0">
-          <thead>
-            <tr>
-              <th class="text-center">รหัสโครงการ</th>
-              <th class="text-center">เลขใบเสนอราคา</th>
-              <th class="text-center">ชื่อโครงการ</th>
-              <th class="text-center">วันที่เริ่มสัญญา</th>
-              <th class="text-center">กำหนดส่งงาน</th>
-              <th class="text-center">สัญญา</th>
-              <th class="text-center">แบบงาน</th>
-              <th class="text-center">ราคา</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr v-for="project in allProjects" :key="project.id">
-              <td class="text-center">{{ project.id }}</td>
-              <td class="text-center">{{ project.quoteId }}</td>
-              <td>
-                <a href="#" @click.prevent="showProjectDetails(project.id)">{{
-                  project.name
-                }}</a>
-              </td>
-              <td class="text-center">{{ project.startDate }}</td>
-              <td class="text-center">{{ project.dueDate }}</td>
-              <td class="text-center">{{ project.contract }}</td>
-              <td class="text-center">{{ project.blueprint }}</td>
-              <td class="text-end">{{ formatPrice(project.price) }}</td>
-            </tr>
-          </tbody>
-        </table>
+      <div class="card">
+        <div class="card-body">
+          <h1 class="h3 mb-4"><strong>โครงการ</strong></h1>
+    
+          <h2 class="h4 mb-3">โครงการที่กำลังดำเนินการ</h2>
+          <div class="table-responsive mb-4">
+            <table class="table table-bordered mb-0">
+              <thead>
+                <tr>
+                  <th class="text-center">รหัสโครงการ</th>
+                  <th class="text-center">เลขใบเสนอราคา</th>
+                  <th class="text-center">ชื่อโครงการ</th>
+                  <th class="text-center">วันที่เริ่มสัญญา</th>
+                  <th class="text-center">กำหนดส่งงาน</th>
+                  <th class="text-center">แบบงาน</th>
+                  <th class="text-center">การอนุมัติ</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr v-for="project in ongoingProjects" :key="project.id">
+                  <td class="text-center">{{ project.id }}</td>
+                  <td class="text-center">{{ project.quoteId }}</td>
+                  <td>{{ project.name }}</td>
+                  <td class="text-center">{{ project.startDate }}</td>
+                  <td class="text-center">{{ project.dueDate }}</td>
+                  <td class="text-center">{{ project.blueprint }}</td>
+                  <td class="text-center">
+                    <button type="button" class="btn btn-primary me-2">
+                      <i class="fas fa-plus"></i> อนุมัติ
+                    </button>
+    
+                    <button type="button" class="btn btn-danger">
+                      <i class="fas fa-plus"></i> ไม่อนุมัติ
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+    
+          <h2 class="h4 mb-3">โครงการทั้งหมด</h2>
+          <p class="text-danger mb-2">คลิกที่ชื่อโครงการเพื่อดูความก้าวหน้า</p>
+          <div class="table-responsive">
+            <table class="table table-bordered mb-0">
+              <thead>
+                <tr>
+                  <th class="text-center">รหัสโครงการ</th>
+                  <th class="text-center">เลขใบเสนอราคา</th>
+                  <th class="text-center">ชื่อโครงการ</th>
+                  <th class="text-center">วันที่เริ่มสัญญา</th>
+                  <th class="text-center">กำหนดส่งงาน</th>
+                  <th class="text-center">สัญญา</th>
+                  <th class="text-center">แบบงาน</th>
+                  <th class="text-center">ราคา</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr v-for="project in allProjects" :key="project.id">
+                  <td class="text-center">{{ project.id }}</td>
+                  <td class="text-center">{{ project.quoteId }}</td>
+                  <td>
+                    <a href="#" @click.prevent="showProjectDetails(project.id)">{{
+                      project.name
+                    }}</a>
+                  </td>
+                  <td class="text-center">{{ project.startDate }}</td>
+                  <td class="text-center">{{ project.dueDate }}</td>
+                  <td class="text-center">{{ project.contract }}</td>
+                  <td class="text-center">{{ project.blueprint }}</td>
+                  <td class="text-end">{{ formatPrice(project.price) }}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
       </div>
-    </div>
-  </div>
+  </main>
+
 </template>
 
 <script>

@@ -9,36 +9,35 @@
                     <div class="card">
 
                         <div class="card-body">
-                            <form id="insert-user" action="" autocomplete="off">
+                            <form id="insert-user" @submit.prevent="onSubmit" autocomplete="off">
                                 <div class="row">
                                     <div class="col-md-4 my-2">
                                         <label for="id-card" class="form-label">เลขประจำตัวผู้เสียภาษี :</label>
-                                        <input type="text" id="id-card" class="form-control" aria-describedby="id-card-HelpBlock">
+                                        <input type="text" id="id_card" name="id_card" v-model="customer_store.form.data.id_card" class="form-control" aria-describedby="id-card-HelpBlock">
                                     </div>
                                     <div class="col-md-4 my-2">
                                         <label for="firstname" class="form-label">ชื่อจริง :</label>
-                                        <input type="text" id="firstname" class="form-control" aria-describedby="firstname-HelpBlock">
+                                        <input type="text" id="firstname" name="firstname" v-model="customer_store.form.data.firstname" class="form-control" aria-describedby="firstname-HelpBlock">
                                     </div>
                                     <div class="col-md-4 my-2">
                                         <label for="lastname" class="form-label">นามสกุล :</label>
-                                        <input type="text" id="lastname" class="form-control" aria-describedby="lastnameHelpBlock">
+                                        <input type="text" id="lastname" name="lastname" v-model="customer_store.form.data.lastname" class="form-control" aria-describedby="lastnameHelpBlock">
                                     </div>
 
                                     <div class="col-md-4 my-2">
                                         <label for="tel" class="form-label">เบอร์โทร :</label>
-                                        <input type="number" id="tel" class="form-control" aria-describedby="telHelpBlock">
+                                        <input type="text" id="tel" name="tel" v-model="customer_store.form.data.tel" class="form-control" aria-describedby="telHelpBlock">
                                     </div>
                                     <div class="col-md-4 my-2">
                                         <label for="email" class="form-label">E-mail :</label>
-                                        <input type="text" id="email" class="form-control" aria-describedby="emailHelpBlock">
+                                        <input type="text" id="email" name="email" v-model="customer_store.form.data.email" class="form-control" aria-describedby="emailHelpBlock">
                                     </div>
 
                                     <div class="col-md-4 my-2">
                                         <label for="status" class="form-label">สถานะ :</label>
-                                        <select name="status" class="form-select" aria-label="Default select status">
-                                            <option selected>สถานะ 1</option>
-                                            <option value="1">สถานะ 2</option>
-                                            <option value="2">สถานะ 3</option>
+                                        <select name="status" class="form-select" v-model="customer_store.form.data.status" aria-label="Default select status">
+                                            <option value="1" selected>ใช้งาน</option>
+                                            <option value="2">ไม่ใช้งาน</option>
                                         </select>
                                     </div>
 
@@ -53,12 +52,12 @@
 
                                     <div class="col-md-12 my-2">
                                         <label for="address" class="form-label">ที่อยู่ :</label>
-                                        <textarea class="form-control" id="address" rows="5"></textarea>                                    
+                                        <textarea class="form-control" id="address" name="address" v-model="customer_store.form.data.address" rows="5"></textarea>                                    
                                     </div>
                                     
                                     <div class="col-md-12 my-2">
                                         <label for="note" class="form-label">หมายเหตุ :</label>
-                                        <textarea class="form-control" id="note" rows="5"></textarea>                                    
+                                        <textarea class="form-control" id="note" name="note" v-model="customer_store.form.data.note" rows="5"></textarea>                                    
                                     </div>
                                 </div>
 
@@ -93,6 +92,51 @@
     </div>
 </template>
 <script setup>
+import { ref, reactive, computed, watch ,onMounted } from "vue";
+import { userAuthStore } from "@/stores/models/userAuthStore";
+import { customerStore } from "@/stores/models/customerStore";
+import { useRouter } from "vue-router";
+import axios from "axios";
+import Swal from "sweetalert2";
+
+const customer_store = customerStore();
+const router = useRouter();
+
+const headers = {
+    headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("access_token")}`,
+    },
+}
+
+onMounted(async() => {
+
+});
+
+const onSubmit = async () => {
+    try {
+        const response  = await axios.post(customer_store.url.store_customer, customer_store.form.data)
+        if (response.status == 200) {
+            await Swal.fire({
+            icon: "success",
+            title: "success",
+            text: response.message,
+            }).then((result) => {
+                router.push('/app/customer');
+            });
+        }
+    } catch (error) {
+        if (error.response.status == 500) {
+            await Swal.fire({
+            icon: "error",
+            title: "Oops...",
+            text: error.response.data.message,
+            });
+        }
+    }
+}
+
+
 </script>
 <style>
     
