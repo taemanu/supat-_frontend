@@ -1,118 +1,112 @@
-<style>
-	.btn-equal-size {
-		width: 90px;
-	}
-</style>
 <template>
-  <main class="content">
-    <div class="container-fluid p-0 ">
-      <div class="d-flex justify-content-between m-2" >
-          <h1 class="h3 mb-3"><strong>ใบสั่งซื้อวัสดุ</strong></h1>
-          <button type="button" class="btn btn-success pt-2" @click="showModal = true">
-            <i class="bi bi-plus"></i>สร้างใบสั่งซื้อวัสดุ
-          </button>
-      </div>
-    </div>
-    <div class="card">
-      <div class="card-body">
-        <h2 class="h4 mb-3">รออนุมัติ</h2>
-        <div class="table-responsive">
-          <table class="table table-bordered mb-0">
-            <thead>
-              <tr>
-                <th class="text-center">เลขที่ใบสั่งซื้อ</th>
-                <th class="text-center">รหัสโครงการ</th>
-                <th class="text-center">ชื่อใบสั่งซื้อ</th>
-                <th class="text-center">วันที่</th>
-                <th class="text-center">ราคาสุทธิ</th>
-                <th class="text-center">การอนุมัติ</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr v-for="order in purchaseOrdersPending" :key="order.id">
-                <td class="text-center">{{ order.code_number }}</td>
-                <td class="text-center">{{ order.code_project }}</td>
-                <td>{{ order.name }}</td>
-                <td class="text-center">{{ formatThaiDate(order.created_at) }}</td>
-                <td class="text-center">{{ formatPrice(order.price) }}</td>
-                <td class="text-center">
-                  <button type="button" class="btn btn-primary me-2" @click="approval('approve',order.id)">
-                    <i class="fas fa-plus"></i> อนุมัติ
-                  </button>
-  
-                  <button type="button" class="btn btn-danger" @click="approval('cancel',order.id)">
-                    <i class="fas fa-plus"></i> ไม่อนุมัติ
-                  </button>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-  
-        <h2 class="h4 mb-3 mt-4">ใบสั่งซื้อทั้งหมด</h2>
-        <div class="table-responsive">
-          <table class="table table-bordered mb-0">
-            <thead>
-              <tr>
-                <th class="text-center">เลขที่ใบสั่งซื้อ</th>
-                <th class="text-center">รหัสโครงการ</th>
-                <th class="text-center">ชื่อใบสั่งซื้อ</th>
-                <th class="text-center">วันที่</th>
-                <th class="text-center">ราคาสุทธิ</th>
-                <th class="text-center">สถานะ</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr v-for="order in purchaseOrdersAll" :key="order.id">
-                <td class="text-center">{{ order.code_number }}</td>
-                <td class="text-center">{{ order.code_project }}</td>
-                <td>{{ order.name }}</td>
-                <td class="text-center">{{ formatThaiDate(order.created_at) }}</td>
-                <td class="text-center">{{ formatPrice(order.price) }}</td>
-                <td class="text-center" v-html="approvalStatus[order.status]"></td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-    </div>
-
-    <div class="modal-backdrop fade show" v-if="showModal"></div>
-          <div class="modal" :class="{ 'fade show d-block': showModal }">
-            <div class="modal-dialog">
-              <div class="modal-content">
-                <div class="modal-header">
-                  <h5 class="modal-title" id="exampleModalLabel">สร้างใบสั่งซื้อวัสดุ</h5>
-                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" @click="closeModal"></button>
-                </div>
-                <form @submit.prevent="onSubmit">
-                  <div class="modal-body">
-                      <div class="mb-3">
-                        <label for="code_number" class="col-form-label">เลขที่ใบสั่งซื้อ:</label>
-                        <input type="text" class="form-control" id="code_number" name="code_number" v-model="formData.code_number">
-                      </div>
-                      <div class="mb-3">
-                        <label for="code_project" class="col-form-label">รหัสโครงการ:</label>
-                        <input type="text" class="form-control" id="code_project" name="code_project" v-model="formData.code_project">
-                      </div>
-                      <div class="mb-3">
-                        <label for="name" class="col-form-label">ชื่อใบสั่งซื้อ:</label>
-                        <input type="text" class="form-control" id="name" name="name" v-model="formData.name">
-                      </div>
-                      <div class="mb-3">
-                        <label for="price" class="col-form-label">ราคาสุทธิ:</label>
-                        <input type="text" class="form-control" id="price" name="price" v-model="formData.price" @change="checkPrice">
-                      </div>
-                  </div>
-                  <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" @click="closeModal">ยกเลิก</button>
-                    <button type="submit" class="btn btn-primary">บันทึก</button>
-                  </div>
-                </form>
+  <div class="card">
+    <div class="card-body">
+      <div class="d-flex justify-content-between">
+        <h1 class="h3 mb-3"><strong>ใบสั่งซื้อวัสดุ</strong></h1>
+        <!-- <router-link class="btn btn-success pt-2" to="/app/FormUser">
+                	<i class="fas fa-check"></i>สร้างใบสั่งซื้อวัสดุ
+				</router-link> -->
+        <button type="button" class="btn btn-success pt-2" @click="showModal = true">
+          <!-- <button type="button" class="btn btn-success pt-2" data-bs-toggle="modal" data-bs-target="#exampleModal"> -->
+          <i class="bi bi-plus"></i>สร้างใบสั่งซื้อวัสดุ
+        </button>
+        <div class="modal-backdrop fade show" v-if="showModal"></div>
+        <div class="modal" :class="{ 'fade show d-block': showModal }">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">สร้างใบสั่งซื้อวัสดุ</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" @click="closeModal"></button>
               </div>
+              <form @submit.prevent="onSubmit">
+                <div class="modal-body">
+                    <div class="mb-3">
+                      <label for="code_number" class="col-form-label">เลขที่ใบสั่งซื้อ:</label>
+                      <input type="text" class="form-control" id="code_number" name="code_number" v-model="formData.code_number">
+                    </div>
+                    <div class="mb-3">
+                      <label for="code_project" class="col-form-label">รหัสโครงการ:</label>
+                      <input type="text" class="form-control" id="code_project" name="code_project" v-model="formData.code_project">
+                    </div>
+                    <div class="mb-3">
+                      <label for="name" class="col-form-label">ชื่อใบสั่งซื้อ:</label>
+                      <input type="text" class="form-control" id="name" name="name" v-model="formData.name">
+                    </div>
+                    <div class="mb-3">
+                      <label for="price" class="col-form-label">ราคาสุทธิ:</label>
+                      <input type="text" class="form-control" id="price" name="price" v-model="formData.price" @change="checkPrice">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" @click="closeModal">ยกเลิก</button>
+                  <button type="submit" class="btn btn-primary">บันทึก</button>
+                </div>
+              </form>
             </div>
           </div>
-  </main>
+        </div>
+      </div>
+      <h2 class="h4 mb-3">รออนุมัติ</h2>
+      <div class="table-responsive">
+        <table class="table table-bordered mb-0">
+          <thead>
+            <tr>
+              <th class="text-center">เลขที่ใบสั่งซื้อ</th>
+              <th class="text-center">รหัสโครงการ</th>
+              <th class="text-center">ชื่อใบสั่งซื้อ</th>
+              <th class="text-center">วันที่</th>
+              <th class="text-center">ราคาสุทธิ</th>
+              <th class="text-center">การอนุมัติ</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr v-for="order in purchaseOrdersPending" :key="order.id">
+              <td class="text-center">{{ order.code_number }}</td>
+              <td class="text-center">{{ order.code_project }}</td>
+              <td>{{ order.name }}</td>
+              <td class="text-center">{{ formatThaiDate(order.created_at) }}</td>
+              <td class="text-center">{{ formatPrice(order.price) }}</td>
+              <td class="text-center">
+                <button type="button" class="btn btn-primary me-2" @click="approval('approve',order.id)">
+                  <i class="fas fa-plus"></i> อนุมัติ
+                </button>
+
+                <button type="button" class="btn btn-danger" @click="approval('cancel',order.id)">
+                  <i class="fas fa-plus"></i> ไม่อนุมัติ
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2 class="h4 mb-3 mt-4">ใบสั่งซื้อทั้งหมด</h2>
+      <div class="table-responsive">
+        <table class="table table-bordered mb-0">
+          <thead>
+            <tr>
+              <th class="text-center">เลขที่ใบสั่งซื้อ</th>
+              <th class="text-center">รหัสโครงการ</th>
+              <th class="text-center">ชื่อใบสั่งซื้อ</th>
+              <th class="text-center">วันที่</th>
+              <th class="text-center">ราคาสุทธิ</th>
+              <th class="text-center">สถานะ</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr v-for="order in purchaseOrdersAll" :key="order.id">
+              <td class="text-center">{{ order.code_number }}</td>
+              <td class="text-center">{{ order.code_project }}</td>
+              <td>{{ order.name }}</td>
+              <td class="text-center">{{ formatThaiDate(order.created_at) }}</td>
+              <td class="text-center">{{ formatPrice(order.price) }}</td>
+              <td class="text-center" v-html="approvalStatus[order.status]"></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
 </template>
 
 <script>
@@ -141,9 +135,9 @@ export default {
     const price = ref('')
 
     const approvalStatus = {
-      pending: `<span class="btn bg-warning btn-equal-size">pending</span>`,
-      success: `<span class="btn btn-success btn-equal-size">success</span>`,
-      cancel: `<span class="btn bg-danger btn-equal-size">cancel</span>`
+      pending: `<span class="badge bg-secondary">pending</span>`,
+      success: `<span class="badge bg-success">success</span>`,
+      cancel: `<span class="badge bg-danger">cancel</span>`
     }
 
     const headers = {
@@ -182,21 +176,21 @@ export default {
     }
 
     const onSubmit = async () => {
-      try {
+     try {
         const { data } = await axios.post(`${import.meta.env.VITE_API_URL}/po/create`, formData, headers)
-        if (data.status == true) {
+        if (data.staus == true) {
           await Swal.fire({
             icon: "success",
             title: "success",
             text: data.message,
-          }).then((result) => {
+         }).then((result) => {
               if (result.isConfirmed) {
                 closeModal()
                 getDataList('pending')
                 getDataList('all')
                 Object.keys(formData).forEach(key => formData[key] = '')
               }
-          });;
+          });
         }
       } catch (error) {
         if (error.response.status == 500) {
@@ -223,7 +217,7 @@ export default {
                 getDataList('pending')
                 getDataList('all')
               }
-          });;
+          });
         }
       } catch (error) {
         if (error.response.status == 500) {

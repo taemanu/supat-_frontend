@@ -19,6 +19,7 @@ import MonthlyEmployeeReport from "../views/employee/MonthlyEmployeeReport.vue";
 import Quotation from "../views/customer/Quotation.vue";
 import FinancialList from "../views/financial/FinancialList.vue";
 import EmployeeList from "../views/employee/EmployeeList.vue";
+import FormQuotation from "../views/quotation/FormQuotation.vue";
 
 const routes = [
   {
@@ -97,6 +98,18 @@ const routes = [
         path: "/app/Quotation",
         name: "Quotation",
         component: Quotation,
+      },
+
+      {
+        path: "/app/Quotation/Create",
+        name: "FormQuotation",
+        component: FormQuotation,
+      },
+
+      {
+        path: "/app/Quotation/Edit/:id",
+        name: "FormEditQuotation",
+        component: FormQuotation,
       },
 
       {
