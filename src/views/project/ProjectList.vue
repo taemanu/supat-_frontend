@@ -9,9 +9,9 @@
       <div class="container-fluid p-0 ">
         <div class="d-flex justify-content-between m-2" >
           <h1 class="h3 mb-4"><strong>โครงการ</strong></h1>
-          <button type="button" class="btn btn-success pt-2">
-              <i class="bi bi-plus"></i>สร้างโครงการ
-          </button>
+          <router-link class="btn btn-success" to="/app/FormProject">
+          <i class="bi bi-plus"></i>สร้างโครงการ
+        </router-link>
         </div>
       </div>
       <div class="card">
@@ -33,19 +33,19 @@
                 </tr>
               </thead>
               <tbody>
-                <tr v-for="project in ongoingProjects" :key="project.id">
-                  <td class="text-center">{{ project.id }}</td>
-                  <td class="text-center">{{ project.quoteId }}</td>
-                  <td>{{ project.name }}</td>
-                  <td class="text-center">{{ project.startDate }}</td>
-                  <td class="text-center">{{ project.dueDate }}</td>
-                  <td class="text-center">{{ project.blueprint }}</td>
+                <tr v-for="(list, index) in project_store.data_list_pedding" :key="index" >
+                  <td class="text-center">{{ list.p_code }}</td>
+                  <td class="text-center">{{ list.id_qt }}</td>
+                  <td>{{ list.p_name }}</td>
+                  <td class="text-center">{{ list.date_start }}</td>
+                  <td class="text-center">{{ list.date_end }}</td>
+                  <td class="text-center">xxx.pdf</td>
                   <td class="text-center">
-                    <button type="button" class="btn btn-primary me-2">
+                    <button type="button" class="btn btn-primary me-2" @click="change_status(list.id,'approve')">
                       <i class="fas fa-plus"></i> อนุมัติ
                     </button>
     
-                    <button type="button" class="btn btn-danger">
+                    <button type="button" class="btn btn-danger" @click="change_status(list.id,'cancel')">
                       <i class="fas fa-plus"></i> ไม่อนุมัติ
                     </button>
                   </td>
@@ -68,106 +68,202 @@
                   <th class="text-center">สัญญา</th>
                   <th class="text-center">แบบงาน</th>
                   <th class="text-center">ราคา</th>
+                  <th class="text-center">สถานะ</th>
+                  <th class="text-center">จัดการ</th>
                 </tr>
               </thead>
               <tbody>
-                <tr v-for="project in allProjects" :key="project.id">
-                  <td class="text-center">{{ project.id }}</td>
-                  <td class="text-center">{{ project.quoteId }}</td>
+                <tr v-for="(list2, index2) in project_store.data_list" :key="index2" >
+                  <td class="text-center">{{ list2.p_code }}</td>
+                  <td class="text-center">{{ list2.id_qt }}</td>
                   <td>
-                    <a href="#" @click.prevent="showProjectDetails(project.id)">{{
-                      project.name
-                    }}</a>
+                    <a href="#" @click="showProjectDetails(list2.p_code)">{{ list2.p_name}}</a>
                   </td>
-                  <td class="text-center">{{ project.startDate }}</td>
-                  <td class="text-center">{{ project.dueDate }}</td>
-                  <td class="text-center">{{ project.contract }}</td>
-                  <td class="text-center">{{ project.blueprint }}</td>
-                  <td class="text-end">{{ formatPrice(project.price) }}</td>
+                  <td class="text-center">{{ list2.date_start }}</td>
+                  <td class="text-center">{{ list2.date_end }}</td>
+                  <td class="text-center">xxxx.pdf</td>
+                  <td class="text-center">xxxx.pdf</td>
+                  <td class="text-end">99999</td>
+                  <td class="text-center">
+                    <span class="text-success" v-if="list2.status == 'success'">
+                      อนุมัติ
+                    </span>
+    
+                    <span class="text-danger" v-if="list2.status == 'reject'">
+                      ไม่อนุมัติ
+                    </span>
+                  </td>
+                  <td class="text-center">
+                    <button type="button" class="btn btn-warning me-2" @click="change_status(list.id,'approve')">
+                      <i class="fas fa-plus"></i> จัดการ
+                    </button>
+                  </td>
                 </tr>
               </tbody>
             </table>
           </div>
         </div>
       </div>
+
+
+      <!-- Bootstrap 5 Modal -->
+      <div class="modal fade" id="projectModal" tabindex="-1" aria-labelledby="projectModalLabel" aria-hidden="true" ref="projectModal">
+  <div class="modal-dialog modal-lg modal-dialog-centered">  <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="projectModalLabel">{{ modalContent.name }}</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <ul class="list-group">  <li class="list-group-item d-flex justify-content-between align-items-center">
+            <strong>รหัสโครงการ:</strong>
+            <span class="badge bg-primary rounded-pill">{{ modalContent.code_p }}</span>
+          </li>
+          <li class="list-group-item d-flex justify-content-between align-items-center">
+            <strong>ชื่อโครงการ:</strong>
+            <span>{{ modalContent.name }}</span>
+          </li>
+          <li class="list-group-item d-flex justify-content-between align-items-center">
+            <strong>เลขใบเสนอราคา:</strong>
+            <span>{{ modalContent.id_qt }}</span>
+          </li>
+          <li class="list-group-item d-flex justify-content-between align-items-center">
+            <strong>วันที่เริ่มสัญญา:</strong>
+            <span>{{ modalContent.date_start }}</span>
+          </li>
+          <li class="list-group-item d-flex justify-content-between align-items-center">
+            <strong>กำหนดส่งงาน:</strong>
+            <span>{{ modalContent.date_end }}</span>
+          </li>
+          <li class="list-group-item d-flex justify-content-between align-items-center">
+            <strong>สถานะ:</strong>
+            <span>{{ modalContent.status }}</span>
+          </li>
+          <li class="list-group-item d-flex justify-content-between align-items-center">
+            <strong>ความคืบหน้า:</strong>
+            <span>{{ modalContent.progress }}</span>
+          </li>
+          <li class="list-group-item d-flex justify-content-between align-items-center">
+            <strong for="file1">สัญญา:</strong>  <a :href="modalContent.file1" download>{{ modalContent.file1 }}</a>  </li>
+          <li class="list-group-item d-flex justify-content-between align-items-center">
+            <strong for="file2">แบบงาน:</strong>
+            <a :href="modalContent.file2" download>{{ modalContent.file2 }}</a>
+          </li>
+        </ul>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>   
+
+</div>
+
   </main>
 
 </template>
 
-<script>
-export default {
-  data() {
-    return {
-      ongoingProjects: [
-        {
-          id: "P0001",
-          quoteId: "B0001",
-          name: "โรงคนแม่น",
-          startDate: "01/02/2567",
-          dueDate: "10/02/2567",
-          blueprint: "aaaaa.pdf",
-        },
-        {
-          id: "P0002",
-          quoteId: "B0002",
-          name: "บ้านน็อคดาวน์สารคี",
-          startDate: "19/02/2567",
-          dueDate: "29/02/2567",
-          blueprint: "bbbbb.pdf",
-        },
-        {
-          id: "P0003",
-          quoteId: "B0003",
-          name: "โรงหล่อหลอมแก้ว",
-          startDate: "24/03/2567",
-          dueDate: "30/03/2567",
-          blueprint: "ccccc.pdf",
-        },
-      ],
-      allProjects: [
-        {
-          id: "P0001",
-          quoteId: "B0001",
-          name: "โรงคนแม่น",
-          startDate: "01/02/2567",
-          dueDate: "10/02/2567",
-          contract: "aaaaa.pdf",
-          blueprint: "aaaaa.pdf",
-          price: 75000,
-        },
-        {
-          id: "P0002",
-          quoteId: "B0002",
-          name: "บ้านน็อคดาวน์สารคี",
-          startDate: "19/02/2567",
-          dueDate: "29/02/2567",
-          contract: "bbbbb.pdf",
-          blueprint: "bbbbb.pdf",
-          price: 180000,
-        },
-        {
-          id: "P0003",
-          quoteId: "B0003",
-          name: "โรงหล่อหลอมแก้ว",
-          startDate: "24/03/2567",
-          dueDate: "30/03/2567",
-          contract: "ccccc.pdf",
-          blueprint: "ccccc.pdf",
-          price: 100900,
-        },
-      ],
-    };
-  },
-  methods: {
-    formatPrice(price) {
-      return price.toLocaleString("th-TH");
-    },
-    showProjectDetails(projectId) {
-      // Implement logic to show project details
-      console.log(`Showing details for project ${projectId}`);
-    },
+<script setup>
+import { ref, reactive, computed, watch, onMounted } from "vue";
+import { userAuthStore } from "@/stores/models/userAuthStore";
+import { ProjectStore } from "@/stores/models/ProjectStore";
+import { useRouter } from "vue-router";
+import axios from "axios";
+import Swal from "sweetalert2";
+
+const project_store = ProjectStore();
+const router = useRouter();
+
+const modalContent = reactive({
+  name: "",
+  code_p: "",
+  id_qt: "",
+  date_start: "",
+  date_end: "",
+  status: "",
+  progress: "",
+  file1: "",
+  file2: "",
+});
+
+const headers = {
+  headers: {
+    "Content-Type": "application/json",
+    Authorization: `Bearer ${localStorage.getItem("access_token")}`,
   },
 };
+
+onMounted(async () => {
+  await project_store.getDataList();
+});
+
+const change_status = async (id_project,type) => {
+  const result = await Swal.fire({
+    // title: 'คุณแน่ใจหรือไม่?',
+    text: "คุณแน่ใจหรือไม่?", // "Are you sure?"
+    icon: "warning",
+    showCancelButton: true,
+    confirmButtonColor: "#3085d6",
+    cancelButtonColor: "#d33",
+    confirmButtonText: "ยืนยัน", // "Confirm"
+    cancelButtonText: "ยกเลิก", // "Cancel"
+  });
+
+  if (result.isConfirmed) {
+    try {
+      const response = await axios.post(project_store.url.change_status, {
+        id_project,
+        type,
+      });
+
+      if (response.status === 200) {
+        Swal.fire({
+          icon: "success",
+          title: "Success",
+          text: response.data.message,
+        });
+      }
+    } catch (error) {
+      if (error.response && error.response.status === 500) {
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: error.response.data.message,
+        });
+      } else {
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: "Something went wrong!",
+        });
+      }
+    } finally {
+      project_store.getDataList();
+    }
+  }
+};
+
+const showProjectDetails = async (p_code) => {
+
+  const data = await project_store.getDataDetail(p_code);
+
+  console.log(data.data.p_name)
+
+    // Fetch or set the details of the project using pCode
+  modalContent.code_p = data.data.p_code;  // Assign the project code
+  modalContent.name = data.data.p_name;  // Assign the project name (fetch or set dynamically)
+  modalContent.id_qt = data.data.id_qt;  // Example data, set as needed
+  modalContent.date_start = data.data.date_start;  // Example date, replace with actual data
+  modalContent.date_end = data.data.date_end;  // Example date, replace with actual data
+  modalContent.status = data.data.status;  // Example status, replace with actual data
+  modalContent.progress = "50%";  // Example progress, replace with actual data
+  modalContent.file1 = "File1.pdf";  // Example file, replace with actual data
+  modalContent.file2 = "File2.pdf";  // Example file, replace with actual data
+  
+  // Use Bootstrap's JavaScript to show the modal
+  const modal = new bootstrap.Modal(document.getElementById('projectModal'));
+  modal.show();
+}
+
 </script>
 
 <style scoped>

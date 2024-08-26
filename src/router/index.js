@@ -9,12 +9,14 @@ import authentication from "@/middleware/authentication";
 import Customer from "../views/customer/List.vue";
 import FormCustomer from "../views/customer/FormCustomer.vue";
 
+import ProjectList from "../views/project/ProjectList.vue";
+import FormProject from "../views/project/FormProject.vue";
+
 import User from "../views/user/User.vue";
 import FormUser from "../views/user/FormUser.vue";
 import Profile from "../views/profile/Profile.vue";
 import CateMaterial from "../views/material/ListCate.vue";
 import MaterialOrder from "../views/materialorder/materialorderList.vue";
-import ProjectList from "../views/project/ProjectList.vue";
 import MonthlyEmployeeReport from "../views/employee/MonthlyEmployeeReport.vue";
 import Quotation from "../views/customer/Quotation.vue";
 import FinancialList from "../views/financial/FinancialList.vue";
@@ -86,6 +88,11 @@ const routes = [
         path: "/app/ProjectList",
         name: "ProjectList",
         component: ProjectList,
+      },
+      {
+        path: "/app/FormProject",
+        name: "FormProject",
+        component: FormProject,
       },
 
       {

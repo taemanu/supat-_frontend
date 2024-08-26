@@ -47,6 +47,27 @@ export default {
         icon: "bi bi-person",
         url: "/app/customer",
       },
+      {
+        name: "ใบเสนอราคา",
+        icon: "bi bi-receipt",
+        url: "/app/Quotation",
+      },
+      {
+        name: "โครงการ",
+        icon: "bi bi-kanban-fill",
+        url: "/app/ProjectList",
+      },
+      {
+        name: "ใบสั่งซื้อวัสดุ",
+        icon: "bi bi-card-checklist",
+        url: "/app/materialorderList",
+      },
+      {
+        name: "รายงานเงินเดือน",
+        icon: "bi bi-newspaper",
+        url: "/app/MonthlyEmployeeReport",
+      },
+
       // {
       //   name: "ผู้ใช้งานระบบ",
       //   icon: "bi bi-people",
@@ -73,26 +94,6 @@ export default {
       //   url: "#",
       // },
       {
-        name: "ใบสั่งซื้อวัสดุ",
-        icon: "bi bi-card-checklist",
-        url: "/app/materialorderList",
-      },
-      {
-        name: "โครงการ",
-        icon: "bi bi-kanban-fill",
-        url: "/app/ProjectList",
-      },
-      {
-        name: "รายงานเงินเดือน",
-        icon: "bi bi-newspaper",
-        url: "/app/MonthlyEmployeeReport",
-      },
-      {
-        name: "ใบเสนอราคา",
-        icon: "bi bi-receipt",
-        url: "/app/Quotation",
-      },
-      {
         name: "ข้อมูลการเงิน",
         icon: "bi bi-cash-coin",
         url: "/app/FinancialList",
@@ -101,6 +102,16 @@ export default {
         name: "ข้อมูลพนักงาน",
         icon: "bi bi-person-lines-fill",
         url: "/app/EmployeeList",
+      },
+      {
+        name: "รายงานใบเสนอราคา",
+        icon: "bi bi-person-lines-fill",
+        url: "",
+      },
+      {
+        name: "รายงานใบสั่งซื้อ",
+        icon: "bi bi-person-lines-fill",
+        url: "",
       },
     ];
     function resetMenu(key) {
