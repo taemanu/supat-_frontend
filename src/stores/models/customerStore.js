@@ -9,6 +9,7 @@ export const customerStore = defineStore("customerStore", {
         url: {
             store_customer: `${import.meta.env.VITE_API_URL}/customer/store`,
             list_customer: `${import.meta.env.VITE_API_URL}/customer/get-data-list`,
+            change_status: `${import.meta.env.VITE_API_URL}/customer/change-status`,
         },
         form:{
             data:{

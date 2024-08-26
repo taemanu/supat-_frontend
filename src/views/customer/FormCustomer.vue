@@ -65,7 +65,7 @@
                                     <div class="col-sm-12 d-flex justify-content-center">
 
 
-                                        <router-link class="btn btn-secondary btn-icon-split mx-1" to="/app/user">
+                                        <router-link class="btn btn-secondary btn-icon-split mx-1" to="/app/customer">
                                             <span class="icon text-white-50">
                                                 <i class="fa fa-retweet"></i>
                                             </span>
