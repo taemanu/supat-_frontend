@@ -43,7 +43,7 @@
                                     <th>จำนวน</th>
                                     <th>ราคา/หน่วย</th>
                                     <th>รวม</th>
-                                    <th></th>
+                                    <th>-</th>
                                 </tr>
                             </thead>
                             <tbody>

@@ -63,6 +63,26 @@
                                         <label for="note" class="form-label">หมายเหตุ :</label>
                                         <textarea class="form-control" id="note" name="note" v-model="project_store.form.data.note" rows="5"></textarea>                                    
                                     </div>
+
+                                    <hr class="mt-5">
+                                    <div class="task-container d-flex flex-column">
+                                        <button class="btn btn-success align-self-end" @click.prevent="addTask" >เพิ่มงาน</button>
+                                        <div class="row" v-for="(item, index) in project_store.form.data.task" :key="index">
+                                            <div class="col-md-10 my-2">
+                                                <label for="task" class="form-label">งาน {{ index+1 }} :</label>
+                                                <input type="text" v-model="item.task" class="form-control">
+                                            </div>
+                                            <div class="col-md-2 my-2">
+                                                <label for="percent" class="form-label">ความคืบหน้า:</label>
+                                                <input type="number" v-model="item.percent" class="form-control">
+                                            </div>
+                                            <div class="col-md-12 my-2">
+                                                <button class="btn btn-danger align-self-end" @click.prevent="deleteTask(index)" v-show="index != 0" >ลบ</button>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                            
                                 </div>
 
                                 <div class="form-group row my-2">
@@ -138,6 +158,14 @@ const onSubmit = async () => {
             });
         }
     }
+}
+
+const addTask = async () => {
+    project_store.form.data.task.push({ task: '', percent: 0 });
+}
+
+const deleteTask = async (index) => {
+    project_store.form.data.task.splice(index, 1);
 }
 
 

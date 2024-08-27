@@ -9,9 +9,9 @@
       <div class="container-fluid p-0 ">
         <div class="d-flex justify-content-between m-2" >
           <h1 class="h3 mb-4"><strong>โครงการ</strong></h1>
-          <router-link class="btn btn-success" to="/app/FormProject">
-          <i class="bi bi-plus"></i>สร้างโครงการ
-        </router-link>
+          <router-link class="btn btn-success mt-2" to="/app/FormProject">
+            <i class="bi bi-plus"></i>สร้างโครงการ
+          </router-link>
         </div>
       </div>
       <div class="card">
@@ -94,8 +94,8 @@
                     </span>
                   </td>
                   <td class="text-center">
-                    <button type="button" class="btn btn-warning me-2" @click="change_status(list.id,'approve')">
-                      <i class="fas fa-plus"></i> จัดการ
+                    <button type="button" class="btn btn-warning me-2" @click="showTaskDetails(list2.id,list2.p_name)">
+                      <i class="fas fa-plus"></i> งาน
                     </button>
                   </td>
                 </tr>
@@ -108,55 +108,77 @@
 
       <!-- Bootstrap 5 Modal -->
       <div class="modal fade" id="projectModal" tabindex="-1" aria-labelledby="projectModalLabel" aria-hidden="true" ref="projectModal">
-  <div class="modal-dialog modal-lg modal-dialog-centered">  <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="projectModalLabel">{{ modalContent.name }}</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        <div class="modal-dialog modal-lg modal-dialog-centered">  <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="projectModalLabel">{{ modalContent.name }}</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <ul class="list-group">  <li class="list-group-item d-flex justify-content-between align-items-center">
+                  <strong>รหัสโครงการ:</strong>
+                  <span class="badge bg-primary rounded-pill">{{ modalContent.code_p }}</span>
+                </li>
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                  <strong>ชื่อโครงการ:</strong>
+                  <span>{{ modalContent.name }}</span>
+                </li>
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                  <strong>เลขใบเสนอราคา:</strong>
+                  <span>{{ modalContent.id_qt }}</span>
+                </li>
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                  <strong>วันที่เริ่มสัญญา:</strong>
+                  <span>{{ modalContent.date_start }}</span>
+                </li>
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                  <strong>กำหนดส่งงาน:</strong>
+                  <span>{{ modalContent.date_end }}</span>
+                </li>
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                  <strong>สถานะ:</strong>
+                  <span>{{ modalContent.status }}</span>
+                </li>
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                  <strong>ความคืบหน้า:</strong>
+                  <span>{{ modalContent.progress }}</span>
+                </li>
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                  <strong for="file1">สัญญา:</strong>  <a :href="modalContent.file1" download>{{ modalContent.file1 }}</a>  </li>
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                  <strong for="file2">แบบงาน:</strong>
+                  <a :href="modalContent.file2" download>{{ modalContent.file2 }}</a>
+                </li>
+              </ul>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+          </div>
+        </div> 
       </div>
-      <div class="modal-body">
-        <ul class="list-group">  <li class="list-group-item d-flex justify-content-between align-items-center">
-            <strong>รหัสโครงการ:</strong>
-            <span class="badge bg-primary rounded-pill">{{ modalContent.code_p }}</span>
-          </li>
-          <li class="list-group-item d-flex justify-content-between align-items-center">
-            <strong>ชื่อโครงการ:</strong>
-            <span>{{ modalContent.name }}</span>
-          </li>
-          <li class="list-group-item d-flex justify-content-between align-items-center">
-            <strong>เลขใบเสนอราคา:</strong>
-            <span>{{ modalContent.id_qt }}</span>
-          </li>
-          <li class="list-group-item d-flex justify-content-between align-items-center">
-            <strong>วันที่เริ่มสัญญา:</strong>
-            <span>{{ modalContent.date_start }}</span>
-          </li>
-          <li class="list-group-item d-flex justify-content-between align-items-center">
-            <strong>กำหนดส่งงาน:</strong>
-            <span>{{ modalContent.date_end }}</span>
-          </li>
-          <li class="list-group-item d-flex justify-content-between align-items-center">
-            <strong>สถานะ:</strong>
-            <span>{{ modalContent.status }}</span>
-          </li>
-          <li class="list-group-item d-flex justify-content-between align-items-center">
-            <strong>ความคืบหน้า:</strong>
-            <span>{{ modalContent.progress }}</span>
-          </li>
-          <li class="list-group-item d-flex justify-content-between align-items-center">
-            <strong for="file1">สัญญา:</strong>  <a :href="modalContent.file1" download>{{ modalContent.file1 }}</a>  </li>
-          <li class="list-group-item d-flex justify-content-between align-items-center">
-            <strong for="file2">แบบงาน:</strong>
-            <a :href="modalContent.file2" download>{{ modalContent.file2 }}</a>
-          </li>
-        </ul>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-      </div>
-    </div>
-  </div>   
 
-</div>
+      <div class="modal fade" id="TaskModal" tabindex="-1" aria-labelledby="TaskModalLabel" aria-hidden="true" ref="TaskModal">
+        <div class="modal-dialog modal-lg modal-dialog-centered">  <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="projectModalLabel">{{ taskContent.name }}</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <div v-for="(list3, index3) in task_data" :key="index3">
+                <hr>
+                <strong >{{ list3.task_name }}</strong>
+                <div class="progress">
+                  <div class="progress-bar" role="progressbar" :style="{ width: list3.percent + '%' }" aria-valuenow="${task.percent}" aria-valuemin="0" aria-valuemax="100">{{ list3.percent }}%</div>   
+                </div>
+                <p>สถานะ : {{ list3.status }}</p>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+          </div>
+        </div> 
+      </div>
 
   </main>
 
@@ -184,6 +206,12 @@ const modalContent = reactive({
   file1: "",
   file2: "",
 });
+
+const taskContent = reactive({
+  name: "",
+});
+
+const task_data = ref(null);
 
 const headers = {
   headers: {
@@ -254,13 +282,22 @@ const showProjectDetails = async (p_code) => {
   modalContent.id_qt = data.data.id_qt;  // Example data, set as needed
   modalContent.date_start = data.data.date_start;  // Example date, replace with actual data
   modalContent.date_end = data.data.date_end;  // Example date, replace with actual data
-  modalContent.status = data.data.status;  // Example status, replace with actual data
+  modalContent.status = 'กำลังดำเนินการ';  // Example status, replace with actual data
   modalContent.progress = "50%";  // Example progress, replace with actual data
   modalContent.file1 = "File1.pdf";  // Example file, replace with actual data
   modalContent.file2 = "File2.pdf";  // Example file, replace with actual data
   
   // Use Bootstrap's JavaScript to show the modal
   const modal = new bootstrap.Modal(document.getElementById('projectModal'));
+  modal.show();
+}
+
+const showTaskDetails = async (id,name) => {
+  const data = await project_store.getDataDetail(id);
+  task_data.value = data.data;
+
+  taskContent.name = name;
+  const modal = new bootstrap.Modal(document.getElementById('TaskModal'));
   modal.show();
 }
 

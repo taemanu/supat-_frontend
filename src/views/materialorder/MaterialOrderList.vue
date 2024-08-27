@@ -178,7 +178,10 @@ export default {
     const onSubmit = async () => {
      try {
         const { data } = await axios.post(`${import.meta.env.VITE_API_URL}/po/create`, formData, headers)
-        if (data.staus == true) {
+
+        console.log(data);
+
+        if (data.status == true) {
           await Swal.fire({
             icon: "success",
             title: "success",
