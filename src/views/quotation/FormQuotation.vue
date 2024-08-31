@@ -13,7 +13,7 @@
                     <div class="title-quotation d-flex flex-column align-items-center">
                         <div>หจก.สุพัฒน์การช่าง</div>
                         <div>ที่อยู่ 146 หมู่.8 ต.ดอนแก้ว อ.แม่ริม จ.เชียงใหม่ 50180</div>
-                        <div>โกร.089-2647140,0821920547 เลขประจำตัวผู้เสียภาษี: 1-5007-01236-2</div>
+                        <div>โทร.089-2647140,0821920547 เลขประจำตัวผู้เสียภาษี: 1-5007-01236-2</div>
                     </div>
                     <div class="qt-code-date">
                         <div>{{ qtCode }}</div>
@@ -31,7 +31,7 @@
                         <div class="mb-2 row col-5">
                             <label for="customer_code" class="col-sm-2 col-form-label">รหัสลูกค้า</label>
                             <div class="col-sm-10">
-                                <input type="text" class="form-control" id="customer_code" name="customer_code" v-model="formData.customer_code">
+                                <input type="text" class="form-control" id="customer_code" name="customer_code" readonly v-model="formData.customer_code">
                             </div>
                         </div>
                     </div>
@@ -104,6 +104,8 @@ export default {
         const route = useRoute();
         const router = useRouter();
         const id = ref(null);
+        const id_customer = ref(null);
+        const customer = reactive({});
 
         const qtCode = ref('-')
         const dateCreate = ref('-')
@@ -124,12 +126,17 @@ export default {
         })
 
         onMounted(async () => {
-            id.value = route.params.id || null;
+
+            id.value = route.query.qt_id || route.params.id;
+            
+            id_customer.value = route.query.id;
+
             if (id.value) {
                 await getDataEdit(id.value)
             } else {
                 await getQTcode()
             }
+
         })
 
         const addList = () => {
@@ -182,14 +189,18 @@ export default {
         }
 
         const getQTcode = async () => {
-            const { data } = await axios.get(`${import.meta.env.VITE_API_URL}/qt/create`, headers)
+            const { data } = await axios.get(`${import.meta.env.VITE_API_URL}/qt/create/${id_customer.value }`, headers)
+
             if (data.status) {
                 qtCode.value = data.data.qt_code
                 dateCreate.value = formatThaiDate(new Date())
+                Object.assign(customer, data.data.customer_data);
+                formData.customer_code = customer.customer_code
             } else {
                 qtCode.value = '-'
                 dateCreate.value = '-'
             }
+
         }
 
         const getDataEdit = async (id) => {
@@ -259,7 +270,8 @@ export default {
             submitForm,
             formatThaiDate,
             dateCreate,
-            totalP
+            totalP,
+            customer
         }
     }
 }

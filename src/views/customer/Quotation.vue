@@ -3,9 +3,9 @@
     <div class="card-header d-flex justify-content-between align-items-center">
       <h2 class="mb-0">ใบเสนอราคา</h2>
       
-      <router-link class="btn btn-dark" :to="'/app/Quotation/Create'">
+      <!-- <router-link class="btn btn-dark" :to="'/app/Quotation/Create'">
         + เพิ่มข้อมูล
-      </router-link>
+      </router-link> -->
     </div>
     <div class="card-body">
       <div class="table-responsive">

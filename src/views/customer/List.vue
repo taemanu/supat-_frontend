@@ -1,6 +1,6 @@
 <style>
 .btn-equal-size {
-  width: 90px;
+  width: 190px !important;
 }
 </style>
 <template>
@@ -28,7 +28,7 @@
                       </th>
                       <th
                         class="text-center align-middle"
-                        width="7%"
+                        width="10%"
                         scope="col"
                       >
                         รหัสลูกค้า
@@ -52,9 +52,6 @@
                       </th>
                       <!-- <th class="text-center align-middle" scope="col">E-mail</th>
 												<th class="text-center align-middle" scope="col">ที่อยู่</th> -->
-                      <th class="text-center align-middle" scope="col">
-                        จำนวนจ้างงาน
-                      </th>
                       <th class="text-center align-middle" scope="col">
                         สถานะ
                       </th>
@@ -81,7 +78,7 @@
                         />
                       </td>
                       <td class="text-center align-middle">
-                        CS-00{{ list.id }}
+                        {{ list.customer_code }}
                       </td>
                       <td class="text-left align-middle">
                         {{ list.id_tax }}
@@ -98,7 +95,6 @@
 												<td class="text-left align-middle">
 													{{list.address}}
 												</td> -->
-                      <td class="text-center align-middle">1</td>
                       <td class="text-center align-middle">
                         <div @click="change_status(list.id)">
                           <span
@@ -129,6 +125,11 @@
                           <i class="bi bi-pencil-square"></i>
                           แก้ไข
                         </button>
+
+                        <router-link  class="btn btn-primary m-1 btn-equal-size" :to="{ path: '/app/Quotation/Create', query: { id: list.id , qt_id:list.id_qt} }" >
+                          <i class="bi bi-pencil-square"></i>
+                          ใบเสนอราคา
+                        </router-link>
                       </td>
                     </tr>
                   </tbody>
