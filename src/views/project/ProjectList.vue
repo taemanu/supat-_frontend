@@ -41,7 +41,7 @@
                   <td class="text-center">{{ list.date_end }}</td>
                   <td class="text-center">xxx.pdf</td>
                   <td class="text-center">
-                    <button type="button" class="btn btn-primary me-2">
+                    <button type="button" class="btn btn-primary me-2" @click="showTaskDetails(list.id,list.p_name)">
                       <i class="fas fa-plus"></i> จัดการงาน
                     </button>
     
@@ -116,7 +116,7 @@
       </div>
 
 
-      <!-- Bootstrap 5 Modal -->
+      <!-- โคงการ -->
       <div class="modal fade" id="projectModal" tabindex="-1" aria-labelledby="projectModalLabel" aria-hidden="true" ref="projectModal">
         <div class="modal-dialog modal-lg modal-dialog-centered">  <div class="modal-content">
             <div class="modal-header">
@@ -167,20 +167,48 @@
         </div> 
       </div>
 
+      <!-- งาน-->
       <div class="modal fade" id="TaskModal" tabindex="-1" aria-labelledby="TaskModalLabel" aria-hidden="true" ref="TaskModal">
         <div class="modal-dialog modal-lg modal-dialog-centered">  <div class="modal-content">
             <div class="modal-header">
-              <h5 class="modal-title" id="projectModalLabel">{{ taskContent.name }}</h5>
+              <h3 class="modal-title" id="projectModalLabel">โครงการ {{ taskContent.name }}</h3>
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-              <div v-for="(list3, index3) in task_data" :key="index3">
-                <hr>
-                <strong >{{ list3.task_name }}</strong>
-                <div class="progress">
-                  <div class="progress-bar" role="progressbar" :style="{ width: list3.percent + '%' }" aria-valuenow="${task.percent}" aria-valuemin="0" aria-valuemax="100">{{ list3.percent }}%</div>   
+
+              <div>
+                <strong style="margin-right: 10px; flex-basis: 20%; white-space: nowrap;">ดำเนินการไปแล้ว :</strong>
+
+                <div class="progress" style="flex-grow: 1; margin-right: 10px; height: 30px;"> 
+                  <div class="progress-bar" role="progressbar" :style="{ width: net_percent + '%' }" style="background-color: green; height: 100%;" :aria-valuenow="net_percent" aria-valuemin="0" aria-valuemax="100">
+                    {{ net_percent }}%
+                  </div>
                 </div>
-                <p>สถานะ : {{ list3.status }}</p>
+              </div>
+
+              <hr>
+            
+              <div v-for="(task, index) in task_data" :key="index" class="task-item">
+                <div style="display: flex; align-items: center; margin-bottom: 10px;">
+ 
+                  <strong style="margin-right: 10px; flex-basis: 20%; white-space: nowrap;">{{index+1}} . {{ task.task_name }} :</strong>
+                  
+
+                  <div class="progress" style="flex-grow: 1; margin-right: 10px;">
+                    <div class="progress-bar" role="progressbar"                    
+                    :style="{ width: task.percent + '%' }"
+                    :aria-valuenow="task.percent"  
+                    aria-valuemin="0" aria-valuemax="100">
+                      {{ task.percent }}%
+                    </div>
+                  </div>
+                  
+
+                  <div>
+                    <button @click="completeTask(task.id)" class="btn btn-success me-2">เสร็จสมบูรณ์</button>
+                    <button @click="cancelTask(task.id)" class="btn btn-danger me-2">ยกเลิก</button>
+                  </div>
+                </div>
               </div>
             </div>
             <div class="modal-footer">
@@ -222,6 +250,7 @@ const taskContent = reactive({
 });
 
 const task_data = ref(null);
+const net_percent = ref(10);
 
 const headers = {
   headers: {
@@ -306,10 +335,64 @@ const showTaskDetails = async (id,name) => {
   const data = await project_store.getDataDetail(id);
   task_data.value = data.data;
 
+  updateTaskPercentages();
+  
+
   taskContent.name = name;
   const modal = new bootstrap.Modal(document.getElementById('TaskModal'));
   modal.show();
 }
+
+
+const updateTaskPercentages = () => {
+  const totalTasks = task_data.value.length;
+  if (totalTasks === 0) return; 
+
+  const percentPerTask = 100 / totalTasks; 
+
+  task_data.value = task_data.value.map(task => ({
+    ...task,
+    percent: percentPerTask.toFixed(2)
+  }));
+
+  console.log(task_data.value);
+};
+
+const completeTask = async (id) => {
+    const result = await Swal.fire({
+    // title: 'คุณแน่ใจหรือไม่?',
+    text: "คุณแน่ใจหรือไม่?", // "Are you sure?"
+    icon: "warning",
+    showCancelButton: true,
+    confirmButtonColor: "#3085d6",
+    cancelButtonColor: "#d33",
+    confirmButtonText: "ยืนยัน", // "Confirm"
+    cancelButtonText: "ยกเลิก", // "Cancel"
+  });
+
+  if (result.isConfirmed) {
+
+  }
+}
+
+const cancelTask = async (id) => {
+    const result = await Swal.fire({
+    // title: 'คุณแน่ใจหรือไม่?',
+    text: "คุณแน่ใจหรือไม่?", // "Are you sure?"
+    icon: "warning",
+    showCancelButton: true,
+    confirmButtonColor: "#3085d6",
+    cancelButtonColor: "#d33",
+    confirmButtonText: "ยืนยัน", // "Confirm"
+    cancelButtonText: "ยกเลิก", // "Cancel"
+  });
+
+  if (result.isConfirmed) {
+
+  }
+}
+
+
 
 </script>
 

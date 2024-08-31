@@ -276,6 +276,9 @@ export default {
     }
 }
 </script>
-<style scoped>
-    
+<style>
+    .form-control[readonly] {
+        background-color: #e9ecef;
+        opacity: 1;
+    }
 </style>
