@@ -12,16 +12,18 @@ export const ProjectStore = defineStore("ProjectStore", {
             change_status: `${import.meta.env.VITE_API_URL}/project/change-status`,
             project_detail: `${import.meta.env.VITE_API_URL}/project/project-detail/`,
             task_detail: `${import.meta.env.VITE_API_URL}/project/task_detail/`,
+            get_project_from_customer: `${import.meta.env.VITE_API_URL}/project/get-project-from-customer/`,
         },
         form:{
             data:{
                 id_project : "",
+                customer_code : "",
                 name_project : "",
                 code_quo : "",
                 date_contract : "",
                 date_end : "",
                 note : "",
-                status : "",
+                status : "1",
                 task : [
                     {
                         task: '', 
@@ -48,6 +50,11 @@ export const ProjectStore = defineStore("ProjectStore", {
 
         async getDataDetail(id){
             const data  = await axios.get(`${this.url.task_detail}${id}`);
+            return data;
+        },
+
+        async getProjectFromCustomer(customer_code){
+            const data  = await axios.get(`${this.url.get_project_from_customer}${customer_code}`);
             return data;
         }
     }

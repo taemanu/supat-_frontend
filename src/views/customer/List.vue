@@ -1,6 +1,6 @@
 <style>
 .btn-equal-size {
-  width: 190px !important;
+  width: 150px;
 }
 </style>
 <template>
@@ -23,15 +23,15 @@
                   <thead>
                     <tr>
                       <th class="text-center align-middle" scope="col">#</th>
-                      <th class="text-center align-middle" scope="col">
-                        รูปภาพประจำตัว
-                      </th>
                       <th
                         class="text-center align-middle"
                         width="10%"
                         scope="col"
                       >
                         รหัสลูกค้า
+                      </th>
+                      <th class="text-center align-middle" scope="col">
+                        รูปภาพประจำตัว
                       </th>
                       <th
                         class="text-center align-middle"
@@ -69,6 +69,9 @@
                         {{ index + 1 }}
                       </th>
                       <td class="text-center align-middle">
+                        {{ list.customer_code }}
+                      </td>
+                      <td class="text-center align-middle">
                         <img
                           src="../../assets/img/avatars/avatar-2.jpg"
                           width="56"
@@ -76,9 +79,6 @@
                           class="rounded-circle me-2"
                           alt="Vanessa Tucker"
                         />
-                      </td>
-                      <td class="text-center align-middle">
-                        {{ list.customer_code }}
                       </td>
                       <td class="text-left align-middle">
                         {{ list.id_tax }}

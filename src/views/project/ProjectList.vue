@@ -9,9 +9,9 @@
       <div class="container-fluid p-0 ">
         <div class="d-flex justify-content-between m-2" >
           <h1 class="h3 mb-4"><strong>โครงการ</strong></h1>
-          <router-link class="btn btn-success mt-2" to="/app/FormProject">
+          <!-- <router-link class="btn btn-success mt-2" to="/app/FormProject">
             <i class="bi bi-plus"></i>สร้างโครงการ
-          </router-link>
+          </router-link> -->
         </div>
       </div>
       <div class="card">
@@ -29,7 +29,7 @@
                   <th class="text-center">วันที่เริ่มสัญญา</th>
                   <th class="text-center">กำหนดส่งงาน</th>
                   <th class="text-center">แบบงาน</th>
-                  <th class="text-center">การอนุมัติ</th>
+                  <th class="text-center">จัดการ</th>
                 </tr>
               </thead>
               <tbody>
@@ -41,21 +41,31 @@
                   <td class="text-center">{{ list.date_end }}</td>
                   <td class="text-center">xxx.pdf</td>
                   <td class="text-center">
-                    <button type="button" class="btn btn-primary me-2" @click="change_status(list.id,'approve')">
+                    <button type="button" class="btn btn-primary me-2">
+                      <i class="fas fa-plus"></i> จัดการงาน
+                    </button>
+    
+                    <button type="button" class="btn btn-warning me-2">
+                      <i class="fas fa-plus"></i> จัดการค่างวด
+                    </button>
+    
+                    <button type="button" class="btn btn-info me-2">
+                      <i class="fas fa-plus"></i> สั่งซื้อวัสดุ
+                    </button>
+                    <!-- <button type="button" class="btn btn-primary me-2" @click="change_status(list.id,'approve')">
                       <i class="fas fa-plus"></i> อนุมัติ
                     </button>
     
                     <button type="button" class="btn btn-danger" @click="change_status(list.id,'cancel')">
                       <i class="fas fa-plus"></i> ไม่อนุมัติ
-                    </button>
+                    </button> -->
                   </td>
                 </tr>
               </tbody>
             </table>
           </div>
     
-          <h2 class="h4 mb-3">โครงการทั้งหมด</h2>
-          <p class="text-danger mb-2">คลิกที่ชื่อโครงการเพื่อดูความก้าวหน้า</p>
+          <h2 class="h4 mb-3">โครงการที่เสร็จสิ้น</h2>
           <div class="table-responsive">
             <table class="table table-bordered mb-0">
               <thead>

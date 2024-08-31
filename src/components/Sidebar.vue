@@ -38,11 +38,6 @@ export default {
     // const currentPath = ref(route.currentRoute.value.path);
     const menu = [
       {
-        name: "แดชบอร์ด",
-        icon: "bi bi-graph-up",
-        url: "/app/dashboard",
-      },
-      {
         name: "ข้อมูลลูกค้า",
         icon: "bi bi-person",
         url: "/app/customer",
@@ -61,20 +56,14 @@ export default {
         name: "ใบสั่งซื้อวัสดุ",
         icon: "bi bi-card-checklist",
         url: "/app/materialorderList",
-      },
-      {
-        name: "รายงานเงินเดือน",
-        icon: "bi bi-newspaper",
-        url: "/app/MonthlyEmployeeReport",
-      },
-
+      },      
       // {
       //   name: "ผู้ใช้งานระบบ",
       //   icon: "bi bi-people",
       //   url: "/app/user",
       // },
       // {
-      //   name: "โปรไฟล์",
+        //   name: "โปรไฟล์",
       //   icon: "bi bi-person-lines-fill",
       //   url: "/app/profile",
       // },
@@ -94,14 +83,14 @@ export default {
       //   url: "#",
       // },
       {
-        name: "ข้อมูลการเงิน",
-        icon: "bi bi-cash-coin",
-        url: "/app/FinancialList",
-      },
-      {
         name: "ข้อมูลพนักงาน",
         icon: "bi bi-person-lines-fill",
         url: "/app/EmployeeList",
+      },
+      {
+        name: "ข้อมูลการเงิน",
+        icon: "bi bi-cash-coin",
+        url: "/app/FinancialList",
       },
       {
         name: "รายงานใบเสนอราคา",
@@ -112,6 +101,16 @@ export default {
         name: "รายงานใบสั่งซื้อ",
         icon: "bi bi-person-lines-fill",
         url: "",
+      },
+      {
+        name: "แดชบอร์ด",
+        icon: "bi bi-graph-up",
+        url: "/app/dashboard",
+      },
+      {
+        name: "รายงานเงินเดือน",
+        icon: "bi bi-newspaper",
+        url: "/app/MonthlyEmployeeReport",
       },
     ];
     function resetMenu(key) {

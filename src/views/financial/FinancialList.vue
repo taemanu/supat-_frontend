@@ -1,7 +1,7 @@
 <template>
   <div class="card">
     <div class="card-header">
-      <h2 class="mb-0">ข้อมูลการเงิน</h2>
+      <h2 class="mb-0">ข้อมูลการเงิน , ค่าใช้จ่ายโครงการ , ค่าใช้จ่ายอื่นๆ , กำไร - ขาดทุน</h2>
     </div>
     <div class="card-body">
       <div class="table-responsive">

@@ -2,6 +2,8 @@
   <div class="card">
     <div class="card-header">
       <h2 class="mb-0">ข้อมูลพนักงาน</h2>
+
+      <button class="btn btn-primary me-2">เพิ่มพนักงาน</button>
     </div>
     <div class="card-body">
       <h3 class="mb-3">ข้อมูลพนักงานทั้งหมด</h3>
@@ -15,6 +17,7 @@
               <th>รหัสผู้ใช้งาน</th>
               <th>เบอร์โทรศัพท์</th>
               <th>เงินเดือน</th>
+              <th>จัดการ</th>
             </tr>
           </thead>
           <tbody>
@@ -25,6 +28,14 @@
               <td>{{ employee.userId }}</td>
               <td>{{ formatPhoneNumber(employee.phone) }}</td>
               <td>{{ formatSalary(employee.salary) }}</td>
+              <td>
+                <button class="btn btn-primary me-2">
+                  แก้ไข
+                </button>
+                <button class="btn btn-primary me-2">
+                  ค่าตอบแทน
+                </button>
+              </td>
             </tr>
           </tbody>
         </table>
