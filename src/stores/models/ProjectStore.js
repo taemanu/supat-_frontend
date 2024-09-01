@@ -13,6 +13,7 @@ export const ProjectStore = defineStore("ProjectStore", {
             project_detail: `${import.meta.env.VITE_API_URL}/project/project-detail/`,
             task_detail: `${import.meta.env.VITE_API_URL}/project/task_detail/`,
             get_project_from_customer: `${import.meta.env.VITE_API_URL}/project/get-project-from-customer/`,
+            update_percents: `${import.meta.env.VITE_API_URL}/project/update-percents/`,
         },
         form:{
             data:{
