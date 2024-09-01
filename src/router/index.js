@@ -16,12 +16,13 @@ import User from "../views/user/User.vue";
 import FormUser from "../views/user/FormUser.vue";
 import Profile from "../views/profile/Profile.vue";
 import CateMaterial from "../views/material/ListCate.vue";
-import MaterialOrder from "../views/materialorder/materialorderList.vue";
+import MaterialOrder from "../views/materialorder/MaterialOrderList.vue";
 import MonthlyEmployeeReport from "../views/employee/MonthlyEmployeeReport.vue";
 import Quotation from "../views/customer/Quotation.vue";
 import FinancialList from "../views/financial/FinancialList.vue";
 import EmployeeList from "../views/employee/EmployeeList.vue";
 import FormQuotation from "../views/quotation/FormQuotation.vue";
+import Compensation from "../views/employee/Compensation.vue";
 
 const routes = [
   {
@@ -129,6 +130,12 @@ const routes = [
         path: "/app/EmployeeList",
         name: "EmployeeList",
         component: EmployeeList,
+      },
+
+      {
+        path: "/app/Compensation/:id",
+        name: "Compensation",
+        component: Compensation,
       },
     ],
   },
