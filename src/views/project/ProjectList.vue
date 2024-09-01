@@ -29,6 +29,7 @@
                   <th class="text-center">วันที่เริ่มสัญญา</th>
                   <th class="text-center">กำหนดส่งงาน</th>
                   <th class="text-center">แบบงาน</th>
+                  <th class="text-center">ดำเนินการไปแล้ว</th>
                   <th class="text-center">จัดการ</th>
                 </tr>
               </thead>
@@ -40,18 +41,22 @@
                   <td class="text-center">{{ list.date_start }}</td>
                   <td class="text-center">{{ list.date_end }}</td>
                   <td class="text-center">xxx.pdf</td>
+                  <td class="text-center">{{ list.percent }}%</td>
                   <td class="text-center">
-                    <button type="button" class="btn btn-primary me-2" @click="showTaskDetails(list.id,list.p_name)">
+                    <button type="button" class="btn btn-primary me-2" @click="showTaskDetails(list.id,list.p_name,list.percent)">
                       <i class="fas fa-plus"></i> จัดการงาน
                     </button>
     
-                    <button type="button" class="btn btn-warning me-2">
+                    <router-link  class="btn btn-warning me-2" :to="{ path: '/app/ProjectPeriod', query: { id: list.id , id_qt:  list.id_qt ,  p_code:  list.p_code} }">
                       <i class="fas fa-plus"></i> จัดการค่างวด
-                    </button>
-    
-                    <button type="button" class="btn btn-info me-2">
+                    </router-link>
+                    
+
+                    <router-link  class="btn btn btn-info" :to="{ path: '/app/ProjectMaterialList', query: { id: list.id , p_name:  list.p_name ,  p_code:  list.p_code} }" >
                       <i class="fas fa-plus"></i> สั่งซื้อวัสดุ
-                    </button>
+                    </router-link>
+                    <!-- <button type="button" class="btn btn-info me-2">
+                    </button> -->
                     <!-- <button type="button" class="btn btn-primary me-2" @click="change_status(list.id,'approve')">
                       <i class="fas fa-plus"></i> อนุมัติ
                     </button>
@@ -77,7 +82,6 @@
                   <th class="text-center">กำหนดส่งงาน</th>
                   <th class="text-center">สัญญา</th>
                   <th class="text-center">แบบงาน</th>
-                  <th class="text-center">ราคา</th>
                   <th class="text-center">สถานะ</th>
                   <th class="text-center">จัดการ</th>
                 </tr>
@@ -91,12 +95,11 @@
                   </td>
                   <td class="text-center">{{ list2.date_start }}</td>
                   <td class="text-center">{{ list2.date_end }}</td>
-                  <td class="text-center">xxxx.pdf</td>
-                  <td class="text-center">xxxx.pdf</td>
-                  <td class="text-end">99999</td>
+                  <td class="text-center">file1.pdf</td>
+                  <td class="text-center">file2.pdf</td>
                   <td class="text-center">
                     <span class="text-success" v-if="list2.status == 'success'">
-                      อนุมัติ
+                      เสร็จสิ้น
                     </span>
     
                     <span class="text-danger" v-if="list2.status == 'reject'">
@@ -104,7 +107,7 @@
                     </span>
                   </td>
                   <td class="text-center">
-                    <button type="button" class="btn btn-warning me-2" @click="showTaskDetails(list2.id,list2.p_name)">
+                    <button type="button" class="btn btn-warning me-2" @click="showTaskDetails(list2.id,list2.p_name,list2.percent)">
                       <i class="fas fa-plus"></i> งาน
                     </button>
                   </td>
@@ -180,8 +183,8 @@
                 <strong style="margin-right: 10px; flex-basis: 20%; white-space: nowrap;">ดำเนินการไปแล้ว :</strong>
 
                 <div class="progress" style="flex-grow: 1; margin-right: 10px; height: 30px;"> 
-                  <div class="progress-bar" role="progressbar" :style="{ width: net_percent + '%' }" style="background-color: green; height: 100%;" :aria-valuenow="net_percent" aria-valuemin="0" aria-valuemax="100">
-                    {{ net_percent }}%
+                  <div class="progress-bar" role="progressbar" :style="{ width: taskContent.percent + '%' }" style="background-color: green; height: 100%;" :aria-valuenow="taskContent.percent" aria-valuemin="0" aria-valuemax="100">
+                    {{ taskContent.percent }}%
                   </div>
                 </div>
               </div>
@@ -194,19 +197,28 @@
                   <strong style="margin-right: 10px; flex-basis: 20%; white-space: nowrap;">{{index+1}} . {{ task.task_name }} :</strong>
                   
 
-                  <div class="progress" style="flex-grow: 1; margin-right: 10px;">
+                  <div class="progress" style="flex-grow: 1; margin-right: 10px; " v-if="task.status != 'success'">
                     <div class="progress-bar" role="progressbar"                    
-                    :style="{ width: task.percent + '%' }"
-                    :aria-valuenow="task.percent"  
+                    style="width: 0%;"
+                    :aria-valuenow="0"  
                     aria-valuemin="0" aria-valuemax="100">
-                      {{ task.percent }}%
+                      0%
+                    </div>
+                  </div>
+
+                  <div class="progress" style="flex-grow: 1; margin-right: 10px;" v-else>
+                    <div class="progress-bar" role="progressbar"                    
+                    style="width: 100%; background-color: green;"
+                    :aria-valuenow="100"  
+                    aria-valuemin="0" aria-valuemax="100">
+                      100%
                     </div>
                   </div>
                   
 
                   <div>
-                    <button @click="completeTask(task.id)" class="btn btn-success me-2">เสร็จสมบูรณ์</button>
-                    <button @click="cancelTask(task.id)" class="btn btn-danger me-2">ยกเลิก</button>
+                    <button @click="completeTask(task.id,task.percent)" v-if="task.status != 'success'" class="btn btn-warning me-2">เสร็จสิ้น</button>
+                    <button class="btn btn-success me-2" v-else>เสร็จสิ้น</button>
                   </div>
                 </div>
               </div>
@@ -247,10 +259,10 @@ const modalContent = reactive({
 
 const taskContent = reactive({
   name: "",
+  percent: "",
 });
 
 const task_data = ref(null);
-const net_percent = ref(10);
 
 const headers = {
   headers: {
@@ -331,7 +343,7 @@ const showProjectDetails = async (p_code) => {
   modal.show();
 }
 
-const showTaskDetails = async (id,name) => {
+const showTaskDetails = async (id,name,percent) => {
   const data = await project_store.getDataDetail(id);
   task_data.value = data.data;
 
@@ -339,6 +351,7 @@ const showTaskDetails = async (id,name) => {
   
 
   taskContent.name = name;
+  taskContent.percent = percent;
   const modal = new bootstrap.Modal(document.getElementById('TaskModal'));
   modal.show();
 }
@@ -358,7 +371,7 @@ const updateTaskPercentages = () => {
   console.log(task_data.value);
 };
 
-const completeTask = async (id) => {
+const completeTask = async (id_project,percent) => {
     const result = await Swal.fire({
     // title: 'คุณแน่ใจหรือไม่?',
     text: "คุณแน่ใจหรือไม่?", // "Are you sure?"
@@ -371,26 +384,52 @@ const completeTask = async (id) => {
   });
 
   if (result.isConfirmed) {
+    try {
+      const response = await axios.post(project_store.url.update_percents, {
+        id_project,
+        percent
+      });
 
+      if (response.status === 200) {
+        Swal.fire({
+          icon: "success",
+          title: "Success",
+          text: response.data.message,
+        });
+
+
+
+      }
+    } catch (error) {
+      if (error.response && error.response.status === 500) {
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: error.response.data.message,
+        });
+      } else {
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: "Something went wrong!",
+        });
+      }
+    } finally {
+      await project_store.getDataList();
+
+      // Get the existing modal instance
+      const modalElement = document.getElementById('TaskModal');
+      const modal = bootstrap.Modal.getInstance(modalElement);
+      
+      // Check if the modal is already initialized and then hide it
+      if (modal) {
+        modal.hide();
+      }
+    }
   }
 }
 
-const cancelTask = async (id) => {
-    const result = await Swal.fire({
-    // title: 'คุณแน่ใจหรือไม่?',
-    text: "คุณแน่ใจหรือไม่?", // "Are you sure?"
-    icon: "warning",
-    showCancelButton: true,
-    confirmButtonColor: "#3085d6",
-    cancelButtonColor: "#d33",
-    confirmButtonText: "ยืนยัน", // "Confirm"
-    cancelButtonText: "ยกเลิก", // "Cancel"
-  });
 
-  if (result.isConfirmed) {
-
-  }
-}
 
 
 

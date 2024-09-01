@@ -6,10 +6,9 @@
         <!-- <router-link class="btn btn-success pt-2" to="/app/FormUser">
                 	<i class="fas fa-check"></i>สร้างใบสั่งซื้อวัสดุ
 				</router-link> -->
-        <button type="button" class="btn btn-success pt-2" @click="showModal = true">
-          <!-- <button type="button" class="btn btn-success pt-2" data-bs-toggle="modal" data-bs-target="#exampleModal"> -->
+        <!-- <button type="button" class="btn btn-success pt-2" @click="showModal = true">
           <i class="bi bi-plus"></i>สร้างใบสั่งซื้อวัสดุ
-        </button>
+        </button> -->
         <div class="modal-backdrop fade show" v-if="showModal"></div>
         <div class="modal" :class="{ 'fade show d-block': showModal }">
           <div class="modal-dialog">
