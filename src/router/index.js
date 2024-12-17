@@ -26,6 +26,10 @@ import EmployeeList from "../views/employee/EmployeeList.vue";
 import FormQuotation from "../views/quotation/FormQuotation.vue";
 import Compensation from "../views/employee/Compensation.vue";
 
+//ลูกค้า
+import CustomerProjectType from "../views/customer/CustomerProjectType.vue";
+import FormCustomerProjectGarageType from "../views/customer/FormCustomerProjectGarageType.vue";
+
 const routes = [
   {
     path: "/",
@@ -148,6 +152,18 @@ const routes = [
         path: "/app/Compensation/:id",
         name: "Compensation",
         component: Compensation,
+      },
+
+      //ลูกค้าหน้าแรก
+      {
+        path: "/app/Customer/CustomerProjectType",
+        name: "CustomerProjectType",
+        component: CustomerProjectType,
+      },
+      {
+        path: "/app/Customer/CustomerProjectGarageType/detail/:id",
+        name: "FormCustomerProjectGarageType",
+        component: FormCustomerProjectGarageType,
       },
     ],
   },

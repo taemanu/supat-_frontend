@@ -50,6 +50,9 @@ export const ProjectStore = defineStore("ProjectStore", {
         },
 
         async getDataDetail(id){
+
+            console.log(id);
+
             const data  = await axios.get(`${this.url.task_detail}${id}`);
             return data;
         },

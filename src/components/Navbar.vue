@@ -1,10 +1,16 @@
 <template>
     <nav class="navbar navbar-expand navbar-light navbar-bg">
-        <a class="sidebar-toggle js-sidebar-toggle">
+        <!-- <a class="sidebar-toggle js-sidebar-toggle">
             <i class="hamburger align-self-center"></i>
-        </a>
+        </a> -->
 
         <div class="navbar-collapse collapse">
+
+            <button type="button" class="btn btn-primary me-2">พนักงานบัญชี และการจัดการ</button>
+            <button type="button" class="btn btn-primary me-2">ลูกค้า</button>
+            <button type="button" class="btn btn-primary me-2">เจ้าของ</button>
+            <button type="button" class="btn btn-primary me-2">พนักงานทั่วไป</button>
+
             <ul class="navbar-nav navbar-align">
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle d-none d-sm-inline-block" href="#" data-bs-toggle="dropdown">

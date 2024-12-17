@@ -38,22 +38,27 @@ export default {
     // const currentPath = ref(route.currentRoute.value.path);
     const menu = [
       {
-        name: "ข้อมูลลูกค้า",
+        name: "ข้อมูลลูกค้า (บัญชี)",
         icon: "bi bi-person",
         url: "/app/customer",
       },
       {
-        name: "ใบเสนอราคา",
+        name: "ใบเสนอราคา (บัญชี)",
         icon: "bi bi-receipt",
         url: "/app/Quotation",
       },
       {
-        name: "โครงการ",
+        name: "โครงการ (บัญชี)",
         icon: "bi bi-kanban-fill",
         url: "/app/ProjectList",
       },
       {
-        name: "ใบสั่งซื้อวัสดุ",
+        name: "โครงการลูกค้า (บัญชี)",
+        icon: "bi bi-kanban-fill",
+        url: "/app/ProjectList",
+      },
+      {
+        name: "ใบสั่งซื้อวัสดุ (บัญชี)",
         icon: "bi bi-card-checklist",
         url: "/app/materialorderList",
       },      
@@ -83,35 +88,54 @@ export default {
       //   url: "#",
       // },
       {
-        name: "ข้อมูลพนักงาน",
+        name: "ข้อมูลพนักงาน (บัญชี)",
         icon: "bi bi-person-lines-fill",
         url: "/app/EmployeeList",
       },
       {
-        name: "ข้อมูลการเงิน",
+        name: "ข้อมูลการเงิน (บัญชี)",
         icon: "bi bi-cash-coin",
         url: "/app/FinancialList",
       },
       {
-        name: "รายงานใบเสนอราคา",
+        name: "รายงานใบเสนอราคา (เจ้าของ)",
         icon: "bi bi-person-lines-fill",
         url: "",
       },
       {
-        name: "รายงานใบสั่งซื้อ",
+        name: "รายงานใบสั่งซื้อ (เจ้าของ)",
         icon: "bi bi-person-lines-fill",
         url: "",
       },
       {
-        name: "แดชบอร์ด",
+        name: "แดชบอร์ด (เจ้าของ)",
         icon: "bi bi-graph-up",
         url: "/app/dashboard",
       },
       {
-        name: "รายงานเงินเดือน",
+        name: "รายงานเงินเดือน (เจ้าของ)",
         icon: "bi bi-newspaper",
         url: "/app/MonthlyEmployeeReport",
       },
+
+      
+      //ลูกค้า
+      {
+        name: "หน้าแรก (ลูกค้า)",
+        icon: "bi bi-newspaper",
+        url: "/app/Customer/CustomerProjectType",
+      },
+      {
+        name: "ใบเสนอราคา (ลูกค้า)",
+        icon: "bi bi-newspaper",
+        url: "",
+      },
+      {
+        name: "โครงการ (ลูกค้า)",
+        icon: "bi bi-newspaper",
+        url: "",
+      },
+      
     ];
     function resetMenu(key) {
       let el = document.querySelectorAll(".sidebar-item");
