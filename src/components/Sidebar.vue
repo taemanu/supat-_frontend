@@ -55,7 +55,7 @@ export default {
       {
         name: "โครงการลูกค้า (บัญชี)",
         icon: "bi bi-kanban-fill",
-        url: "/app/ProjectList",
+        url: "/app/ProjectCustomerList",
       },
       {
         name: "ใบสั่งซื้อวัสดุ (บัญชี)",

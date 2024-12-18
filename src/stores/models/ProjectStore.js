@@ -14,6 +14,8 @@ export const ProjectStore = defineStore("ProjectStore", {
             task_detail: `${import.meta.env.VITE_API_URL}/project/task_detail/`,
             get_project_from_customer: `${import.meta.env.VITE_API_URL}/project/get-project-from-customer/`,
             update_percents: `${import.meta.env.VITE_API_URL}/project/update-percents/`,
+
+            list_project_customer: `${import.meta.env.VITE_API_URL}/project/project-customer`,
         },
         form:{
             data:{
@@ -34,7 +36,8 @@ export const ProjectStore = defineStore("ProjectStore", {
             }
         },
         data_list_pedding:{},
-        data_list:{}
+        data_list:{},
+        data_project_customer_list:{}
     }),
     actions: {
         async getDataList(){
@@ -60,6 +63,12 @@ export const ProjectStore = defineStore("ProjectStore", {
         async getProjectFromCustomer(customer_code){
             const data  = await axios.get(`${this.url.get_project_from_customer}${customer_code}`);
             return data;
-        }
+        },
+
+        async getDataProjectCustomerList(){
+            const data  = await axios.get(this.url.list_project_customer);
+            this.data_project_customer_list = data.data;
+
+        },
     }
 });

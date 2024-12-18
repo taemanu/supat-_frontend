@@ -13,6 +13,7 @@ import ProjectList from "../views/project/ProjectList.vue";
 import FormProject from "../views/project/FormProject.vue";
 import ProjectMaterialList from "../views/project/ProjectMaterialList.vue";
 import ProjectPeriod from "../views/project/ProjectPeriod.vue";
+import ProjectCustomerList from "../views/project/ProjectCustomerList.vue";
 
 import User from "../views/user/User.vue";
 import FormUser from "../views/user/FormUser.vue";
@@ -95,6 +96,11 @@ const routes = [
         path: "/app/ProjectList",
         name: "ProjectList",
         component: ProjectList,
+      },
+      {
+        path: "/app/ProjectCustomerList",
+        name: "ProjectCustomerList",
+        component: ProjectCustomerList,
       },
       {
         path: "/app/FormProject",
