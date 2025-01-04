@@ -126,10 +126,10 @@
                           แก้ไข
                         </button>
 
-                        <router-link  class="btn btn-primary m-1 btn-equal-size" :to="{ path: '/app/Quotation/Create', query: { id: list.id , qt_id:list.id_qt} }" >
+                        <!-- <router-link  class="btn btn-primary m-1 btn-equal-size" :to="{ path: '/app/Quotation/Create', query: { id: list.id , qt_id:list.id_qt} }" >
                           <i class="bi bi-pencil-square"></i>
                           ใบเสนอราคา
-                        </router-link>
+                        </router-link> -->
                       </td>
                     </tr>
                   </tbody>

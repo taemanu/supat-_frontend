@@ -21,20 +21,85 @@
                     </div>
                 </div>
                 <form @submit.prevent="submitForm">
-                    <div class="d-flex flex-column">
-                        <div class="mb-2 row col-5">
-                            <label for="qt_name" class="col-sm-2 col-form-label">ใบเสนอราคา</label>
-                            <div class="col-sm-10">
-                                <input type="text" class="form-control" id="qt_name" name="qt_name" v-model="formData.qt_name">
-                            </div>
+                    <div class="row">
+                        
+                        <div class="col-md-4 mb-3">
+                            <label for="qt_code" class="form-label">ใบเสนอราคา</label>
+                            <input type="text" class="form-control" id="qt_code" name="qt_code" readonly v-model="qtCode">
                         </div>
-                        <div class="mb-2 row col-5">
-                            <label for="customer_code" class="col-sm-2 col-form-label">รหัสลูกค้า</label>
-                            <div class="col-sm-10">
-                                <input type="text" class="form-control" id="customer_code" name="customer_code" readonly v-model="formData.customer_code">
-                            </div>
+                        
+                        <div class="col-md-4 mb-3">
+                            <label for="qt_name" class="form-label">ชื่อใบเสนอราคา <span class="text-danger">*</span></label>
+                            <input type="text" class="form-control" id="qt_name" name="qt_name" v-model="formData.qt_name" required>
+                        </div>
+                        
+                        <div class="col-md-4 mb-3">
+                            <label for="customer_code" class="form-label">รหัสลูกค้า</label>
+                            <input type="text" class="form-control" id="customer_code" name="customer_code" readonly v-model="formData.customer_code">
                         </div>
                     </div>
+
+                    <hr>
+                    
+                    <!-- <h4 class="mb-0">รายละเอียดโครงการ</h4> -->
+                    <div class="row">
+                        <div class="col-md-4 mb-3">
+                            <label for="pj_code" class="form-label">รหัสโครงการ</label>
+                            <input type="text" class="form-control" id="pj_code" name="pj_code" readonly :value="formData.project_data.project_code">
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <label for="pj_name" class="form-label">โครงการ</label>
+                            <input type="text" class="form-control" id="pj_name" name="pj_name" readonly :value="formData.project_data.project_name">
+                        </div>
+
+                        <div class="col-md-4 mb-3">
+                            <label for="pj_type" class="form-label">ประเภท</label>
+                            <input type="text" class="form-control" id="pj_type" name="pj_type" readonly value="โรงรถ">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4 mb-3">
+                            <label for="type_steel" class="form-label">ชนิดเหล็ก</label>
+                            <input type="text" class="form-control" id="type_steel" name="type_steel" readonly :value="formData.project_data.garage_steel_type">
+                        </div>
+
+                        <div class="col-md-4 mb-3">
+                            <label for="thickness_steel" class="form-label">ความหนาเหล็ก</label>
+                            <input type="text" class="form-control" id="thickness_steel" name="thickness_steel" readonly :value="formData.project_data.garage_steel_thickness">
+                        </div>
+
+                        <div class="col-md-4 mb-3">
+                            <label for="color_sheet" class="form-label">สีเหล็ก</label>
+                            <input type="color" class="form-control" id="color_sheet" name="color_sheet" disabled  :value="formData.project_data.garage_steel_color">
+                        </div>
+
+                        <div class="col-md-4 mb-3">
+                            <label for="type_sheet" class="form-label">แผ่นหลังคา</label>
+                            <input type="text" class="form-control" id="type_sheet" name="type_sheet" readonly :value="formData.project_data.garage_sheet_type">
+                        </div>
+
+
+                        <div class="col-md-4 mb-3">
+                            <label for="color_sheet" class="form-label">สีหลังคา</label>
+                            <input type="color" class="form-control" id="color_sheet" name="color_sheet" disabled  :value="formData.project_data.garage_sheet_color">
+                        </div>
+
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12 mb-3">
+                            <label for="remark" class="form-label">หมายเหตุ</label>
+                            <textarea 
+                                class="form-control" 
+                                id="remark" 
+                                name="remark" 
+                                rows="3" 
+                                readonly 
+                                :value="formData.project_data.garage_note"></textarea>
+                        </div>
+                    </div>
+
+                    <hr>
+
                     <div class="table-responsive">
                         <table class="table table-bordered">
                             <thead class="table-dark">
@@ -79,7 +144,7 @@
                     </div>
                     <div class="d-flex justify-content-center">
                         <button type="submit" class="btn btn-primary">บันทึก</button>
-                        <router-link class="btn btn-secondary mx-2" :to="'/app/Quotation'">ยกเลิก</router-link>
+                        <router-link class="btn btn-secondary mx-2" :to="'/app/ProjectCustomerList'">ยกเลิก</router-link>
                     </div>
                 </form>
             </div>
@@ -122,8 +187,10 @@ export default {
 
         const formData = reactive({
             qt_name: '',
-            customer_code: '' 
+            customer_code: '' ,
+            project_data: [] 
         })
+        
 
         onMounted(async () => {
 
@@ -194,23 +261,26 @@ export default {
             if (data.status) {
                 qtCode.value = data.data.qt_code
                 dateCreate.value = formatThaiDate(new Date())
-                Object.assign(customer, data.data.customer_data);
-                formData.customer_code = customer.customer_code
+                // Object.assign(customer, data.data.customer_data);
+                formData.customer_code = data.data.customer_data
+                formData.project_data = data.data.project_data
             } else {
                 qtCode.value = '-'
                 dateCreate.value = '-'
             }
 
+            // console.log(formData.project_data.project_name);
         }
 
         const getDataEdit = async (id) => {
             const { data } = await axios.get(`${import.meta.env.VITE_API_URL}/qt/edit/${id}`, headers)
             if (data.status) {
-                qtCode.value = data.data.qt_code
-                formData.qt_name = data.data.qt_name
-                formData.customer_code = data.data.customer_code
-                dateCreate.value = formatThaiDate(data.data.created_at)
-                qtList.value = data.data.quotation_list
+                qtCode.value = data.data.data.qt_code
+                formData.qt_name = data.data.data.qt_name
+                formData.customer_code = data.data.data.customer_code
+                dateCreate.value = formatThaiDate(data.data.data.created_at)
+                qtList.value = data.data.data.quotation_list
+                formData.project_data = data.data.project
                 qtList.value.forEach((item,index) => {
                     calculateTotal(index);
                 })

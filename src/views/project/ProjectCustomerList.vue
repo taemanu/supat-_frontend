@@ -38,7 +38,13 @@
                     <td class="text-center">โรงรถ</td>
                     <td class="text-center">{{ list.customer_code }}</td>
                     <td class="text-center">{{ list.firstname }} {{ list.lastname }}</td>
-                    <td class="text-center">รอดำเนินการ</td>
+                    <td class="text-center">
+
+                      <span class="badge bg-warning text-dark" v-if="list.status == 'pending'">ส่งใบเสนอราคา</span>
+
+                      <span class="badge bg-primary" v-if="list.status == 'qt_success'">ยืนยันใบเสนอราคา</span>
+  
+                    </td>
                     <td class="text-center">
 
                         <button
@@ -51,10 +57,15 @@
                           ดูข้อมูล
                         </button>
 
-                        <button  class="btn btn-primary m-1 btn-equal-size">
+
+                        <router-link  class="btn btn-primary m-1 btn-equal-size" :to="{ path: '/app/Quotation/Create', query: { id: list.id , qt_id:list.qt_id } }" >
                           <i class="bi bi-pencil-square"></i>
                           ใบเสนอราคา
-                        </button>
+                        </router-link>
+                        <!-- <button  class="btn btn-primary m-1 btn-equal-size">
+                          <i class="bi bi-pencil-square"></i>
+                          ใบเสนอราคา
+                        </button> -->
                     </td>
                 </tr>
               </tbody>
