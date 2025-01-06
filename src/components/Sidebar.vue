@@ -128,7 +128,7 @@ export default {
       {
         name: "ใบเสนอราคา (ลูกค้า)",
         icon: "bi bi-newspaper",
-        url: "",
+        url: "/app/Customer/CustomerQuotationList",
       },
       {
         name: "โครงการ (ลูกค้า)",

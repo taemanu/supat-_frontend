@@ -16,6 +16,7 @@ export const ProjectStore = defineStore("ProjectStore", {
             update_percents: `${import.meta.env.VITE_API_URL}/project/update-percents/`,
 
             list_project_customer: `${import.meta.env.VITE_API_URL}/project/project-customer`,
+            list_quotation_customer: `${import.meta.env.VITE_API_URL}/qt/customer/list`,
         },
         form:{
             data:{
@@ -37,7 +38,8 @@ export const ProjectStore = defineStore("ProjectStore", {
         },
         data_list_pedding:{},
         data_list:{},
-        data_project_customer_list:{}
+        data_project_customer_list:{},
+        data_quotation_customer_list:{}
     }),
     actions: {
         async getDataList(){
@@ -68,6 +70,12 @@ export const ProjectStore = defineStore("ProjectStore", {
         async getDataProjectCustomerList(){
             const data  = await axios.get(this.url.list_project_customer);
             this.data_project_customer_list = data.data;
+
+        },
+
+        async getDataQuotationCustomerList(){
+            const data  = await axios.get(this.url.list_quotation_customer);
+            this.data_quotation_customer_list = data.data;
 
         },
     }
