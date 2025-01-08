@@ -43,6 +43,8 @@
                       <span class="badge bg-info" v-if="list.status == 'qt_pending'">สร้างใบเสนอราคา</span>
 
                       <span class="badge bg-warning text-dark" v-if="list.status == 'qt_approve'">ส่งใบเสนอราคา</span>
+
+                      <span class="badge bg-success" v-if="list.status == 'qt_success'">ยืนยันใบเสนอราคา</span>
   
                     </td>
                     <td class="text-center">
