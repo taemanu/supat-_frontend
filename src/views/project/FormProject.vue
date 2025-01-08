@@ -36,8 +36,8 @@
                                     <div class="col-md-4 my-2" >
                                         <label for="status" class="form-label">สถานะ :</label>
                                         <select name="status" class="form-select form-control" v-model="project_store.form.data.status" aria-label="Default select status" :readonly="id_pj != null">
-                                            <option value="1" selected >รออนุมัติ</option>
-                                            <option value="2" >อนุมัติ</option>
+                                            <option value="1" selected >กำลังดำเนินการ</option>
+                                            <option value="2" >เสร็จสิ้น</option>
                                         </select>
                                     </div>
 
