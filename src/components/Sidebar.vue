@@ -38,26 +38,26 @@ export default {
     // const currentPath = ref(route.currentRoute.value.path);
     const menu = [
       {
-        name: "ข้อมูลลูกค้า (บัญชี)",
-        icon: "bi bi-person",
-        url: "/app/customer",
-      },
-      {
-        name: "ใบเสนอราคา (บัญชี)",
-        icon: "bi bi-receipt",
-        url: "/app/Quotation",
-      },
-      {
-        name: "โครงการ (บัญชี)",
-        icon: "bi bi-kanban-fill",
-        url: "/app/ProjectList",
-      },
-      {
-        name: "โครงการลูกค้า (บัญชี)",
+        name: "จำนวณผู้ใช้งานในระบบ",
         icon: "bi bi-kanban-fill",
         url: "/app/ProjectCustomerList",
       },
       {
+        name: "จัดการข้อมูลลูกค้า",
+        icon: "bi bi-person",
+        url: "/app/customer",
+      },
+      {
+        name: "จัดการข้อมูลพนักงาน",
+        icon: "bi bi-receipt",
+        url: "/app/EmployeeList",
+      },
+      {
+        name: "จัดการข้อมูล User",
+        icon: "bi bi-kanban-fill",
+        url: "/app/user",
+      },
+      /*{
         name: "ใบสั่งซื้อวัสดุ (บัญชี)",
         icon: "bi bi-card-checklist",
         url: "/app/materialorderList",
@@ -134,8 +134,8 @@ export default {
         name: "โครงการ (ลูกค้า)",
         icon: "bi bi-newspaper",
         url: "",
-      },
-      
+      }, 
+      */     
     ];
     function resetMenu(key) {
       let el = document.querySelectorAll(".sidebar-item");

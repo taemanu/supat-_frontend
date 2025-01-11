@@ -15,6 +15,7 @@ export const userAuthStore = defineStore("userAuthStore", {
     },
     access_token: localStorage.getItem("access_token"),
     user: JSON.parse(localStorage.getItem("user")),
+    permissions : null
   }),
 
   actions: {
@@ -24,13 +25,14 @@ export const userAuthStore = defineStore("userAuthStore", {
           user_id: user_id,
           password: password,
         });
-        console.log("sadsdad", user_id, password);
-
-        console.log(res.status);
 
         if (res.status == 200) {
           this.access_token = res.data.data.access_token;
+          this.permissions = res.data.data.permission_menu;
+
           localStorage.setItem("access_token", res.data.data.access_token);
+          localStorage.setItem("permissions", res.data.data.permission_menu);
+
           await this.me();
           return res;
         }

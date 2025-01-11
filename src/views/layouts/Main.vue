@@ -1,6 +1,6 @@
 <template>
   <div class="wrapper">
-    <SidebarVue />
+    <component :is="getSidebarComponent(role)" v-if="role" />
     <div class="main">
       <NavbarVue />
       <router-view></router-view>
@@ -8,88 +8,46 @@
     </div>
   </div>
 </template>
+
 <script setup>
-import { ref, onMounted, onBeforeUnmount } from "vue";
+import { ref, onMounted } from "vue";
 import { useRouter } from "vue-router";
+import { userAuthStore } from "@/stores/models/userAuthStore";
 import FooterVue from "../../components/Footer.vue";
 import NavbarVue from "../../components/Navbar.vue";
+
 import SidebarVue from "../../components/Sidebar.vue";
+import SidebarVueManager from "../../components/Sidebar_manager.vue";
+import SidebarVueAccount from "../../components/Sidebar_account.vue";
+import SidebarVueCeo from "../../components/Sidebar_ceo.vue";
+import SidebarVueCustomer from "../../components/Sidebar_customer.vue";
 
 const router = useRouter();
+const store_auth = userAuthStore();
+
+const role = ref("");
 
 onMounted(() => {
-  let sidebarActive = ref("dashboard");
-  if (sidebarActive.value == "dashboard") {
-    document.getElementById("menu0").classList.add("active");
+  // ตั้งค่า role จาก localStorage
+  role.value = localStorage.getItem("permissions");
+
+  // Redirect ไปที่ dashboard หาก sidebarActive เป็น "dashboard"
+  const sidebarActive = ref("dashboard");
+  if (sidebarActive.value === "dashboard") {
+    document.getElementById("menu0")?.classList.add("active");
     router.push("/app/dashboard");
   }
-  // document.addEventListener("DOMContentLoaded", function() {
-  //     var ctx = document.getElementById("chartjs-dashboard-line").getContext("2d");
-  //     var gradient = ctx.createLinearGradient(0, 0, 0, 225);
-  //     gradient.addColorStop(0, "rgba(215, 227, 244, 1)");
-  //     gradient.addColorStop(1, "rgba(215, 227, 244, 0)");
-  //     // Line chart
-  //     new Chart(document.getElementById("chartjs-dashboard-line"), {
-  //         type: "line",
-  //         data: {
-  //             labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
-  //             datasets: [{
-  //                 label: "Sales ($)",
-  //                 fill: true,
-  //                 backgroundColor: gradient,
-  //                 borderColor: window.theme.primary,
-  //                 data: [
-  //                     2115,
-  //                     1562,
-  //                     1584,
-  //                     1892,
-  //                     1587,
-  //                     1923,
-  //                     2566,
-  //                     2448,
-  //                     2805,
-  //                     3438,
-  //                     2917,
-  //                     3327
-  //                 ]
-  //             }]
-  //         },
-  //         options: {
-  //             maintainAspectRatio: false,
-  //             legend: {
-  //                 display: false
-  //             },
-  //             tooltips: {
-  //                 intersect: false
-  //             },
-  //             hover: {
-  //                 intersect: true
-  //             },
-  //             plugins: {
-  //                 filler: {
-  //                     propagate: false
-  //                 }
-  //             },
-  //             scales: {
-  //                 xAxes: [{
-  //                     reverse: true,
-  //                     gridLines: {
-  //                         color: "rgba(0,0,0,0.0)"
-  //                     }
-  //                 }],
-  //                 yAxes: [{
-  //                     ticks: {
-  //                         stepSize: 1000
-  //                     },
-  //                     display: true,
-  //                     borderDash: [3, 3],
-  //                     gridLines: {
-  //                         color: "rgba(0,0,0,0.0)"
-  //                     }
-  //                 }]
-  //             }
-  //         }
-  //     });
-  // });
 });
+
+// ฟังก์ชันสำหรับเลือก Sidebar Component
+const getSidebarComponent = (role) => {
+  const sidebarComponents = {
+    super_admin: SidebarVue,
+    manager: SidebarVueManager,
+    account: SidebarVueAccount,
+    ceo: SidebarVueCeo,
+    customer: SidebarVueCustomer,
+  };
+  return sidebarComponents[role] || null; // คืนค่า Component ตาม role
+};
 </script>
