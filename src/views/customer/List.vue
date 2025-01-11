@@ -33,6 +33,14 @@
                       >
                         รหัสลูกค้า
                       </th>
+
+                      <th
+                        class="text-center align-middle"
+                        width="10%"
+                        scope="col"
+                      >
+                        รหัสผู้ใช้งาน
+                      </th>
                       <!-- <th class="text-center align-middle" scope="col">
                         รูปภาพประจำตัว
                       </th> -->
@@ -72,6 +80,9 @@
                     </th>
                     <td class="text-center align-middle">
                       {{ list.customer_code }}
+                    </td>
+                    <td class="text-center align-middle">
+                      {{ list.user_id }}
                     </td>
                     <!-- <td class="text-center align-middle">
                       <img

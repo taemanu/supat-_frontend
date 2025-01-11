@@ -8,7 +8,7 @@
                 <div class="col-12">
                     <div class="card">
 
-                        <div class="card-body">
+                        <div class="card-body" v-if="loading">
                             <form id="insert-user" @submit.prevent="onSubmit" autocomplete="off">
                                 <div class="row">
                                     <div class="col-md-4 my-2">
@@ -88,6 +88,7 @@
                             </form>
                         </div>
 
+                        <SectionLoading v-else/>
                     </div>
 
                 </div>
@@ -114,7 +115,25 @@ const headers = {
     },
 }
 
+const loading = ref(true);
+
 onMounted(async() => {
+
+    try {
+    loading.value = false
+    
+    customer_store.form.data.id_card = '';
+    customer_store.form.data.firstname = '';
+    customer_store.form.data.lastname = '';
+    customer_store.form.data.tel = '';
+    customer_store.form.data.email = '';
+    customer_store.form.data.address = '';
+    customer_store.form.data.line_id = '';
+    customer_store.form.data.note = '';
+
+  } finally {
+    await setTimeout((loading.value = true))
+  }
 
 });
 
