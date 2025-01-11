@@ -18,8 +18,9 @@ export const customerStore = defineStore("customerStore", {
                 lastname : "",
                 tel : "",
                 email : "",
-                status : "",
+                status : 1,
                 address : "",
+                line_id : "",
             }
         },
         data_list:{}

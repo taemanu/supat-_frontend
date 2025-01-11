@@ -12,47 +12,52 @@
                             <form id="insert-user" @submit.prevent="onSubmit" autocomplete="off">
                                 <div class="row">
                                     <div class="col-md-4 my-2">
-                                        <label for="id-card" class="form-label">เลขประจำตัวผู้เสียภาษี :</label>
-                                        <input type="text" id="id_card" name="id_card" v-model="customer_store.form.data.id_card" class="form-control" aria-describedby="id-card-HelpBlock">
+                                        <label for="id-card" class="form-label">เลขประจำตัวผู้เสียภาษี <span class="text-danger">*</span> :</label>
+                                        <input type="text" id="id_card" required name="id_card" v-model="customer_store.form.data.id_card" class="form-control" aria-describedby="id-card-HelpBlock" @input="validateIdCard">
                                     </div>
                                     <div class="col-md-4 my-2">
-                                        <label for="firstname" class="form-label">ชื่อจริง :</label>
-                                        <input type="text" id="firstname" name="firstname" v-model="customer_store.form.data.firstname" class="form-control" aria-describedby="firstname-HelpBlock">
+                                        <label for="firstname" class="form-label">ชื่อจริง <span class="text-danger">*</span> :</label>
+                                        <input type="text" id="firstname" name="firstname"  required v-model="customer_store.form.data.firstname" class="form-control" aria-describedby="firstname-HelpBlock">
                                     </div>
                                     <div class="col-md-4 my-2">
-                                        <label for="lastname" class="form-label">นามสกุล :</label>
-                                        <input type="text" id="lastname" name="lastname" v-model="customer_store.form.data.lastname" class="form-control" aria-describedby="lastnameHelpBlock">
+                                        <label for="lastname" class="form-label">นามสกุล <span class="text-danger">*</span> :</label>
+                                        <input type="text" id="lastname" name="lastname"  required v-model="customer_store.form.data.lastname" class="form-control" aria-describedby="lastnameHelpBlock">
                                     </div>
 
                                     <div class="col-md-4 my-2">
-                                        <label for="tel" class="form-label">เบอร์โทร :</label>
-                                        <input type="text" id="tel" name="tel" v-model="customer_store.form.data.tel" class="form-control" aria-describedby="telHelpBlock">
+                                        <label for="tel" class="form-label">เบอร์โทร <span class="text-danger">*</span> :</label>
+                                        <input type="text" id="tel" name="tel" required v-model="customer_store.form.data.tel" class="form-control" aria-describedby="telHelpBlock" @input="validateTel">
                                     </div>
                                     <div class="col-md-4 my-2">
-                                        <label for="email" class="form-label">E-mail :</label>
-                                        <input type="text" id="email" name="email" v-model="customer_store.form.data.email" class="form-control" aria-describedby="emailHelpBlock">
+                                        <label for="email" class="form-label">อีเมล์ <span class="text-danger">*</span> :</label>
+                                        <input type="text" id="email" name="email" required v-model="customer_store.form.data.email" class="form-control" aria-describedby="emailHelpBlock">
                                     </div>
 
                                     <div class="col-md-4 my-2">
                                         <label for="status" class="form-label">สถานะ :</label>
-                                        <select name="status" class="form-select" v-model="customer_store.form.data.status" aria-label="Default select status">
+                                        <select name="status" class="form-select" required v-model="customer_store.form.data.status" aria-label="Default select status">
                                             <option value="1" selected>ใช้งาน</option>
                                             <option value="2">ไม่ใช้งาน</option>
                                         </select>
                                     </div>
 
-                                    <div class="col-md-12 my-2">
+                                    <div class="col-md-4 my-2">
+                                        <label for="line_id" class="form-label">ไลน์ไอดี :</label>
+                                        <input type="text" id="line_id" name="line_id"  v-model="customer_store.form.data.line_id" class="form-control" aria-describedby="line_idHelpBlock">
+                                    </div>
+
+                                    <!-- <div class="col-md-12 my-2">
                                         <label for="status" class="form-label">รูปภาพประจำตัว :</label>
                                         <div class="input-group mb-3">
                                         <input type="file" class="form-control" id="file_picuser">
                                         <label class="input-group-text" for="file_picuser">Upload</label>
                                         </div>
-                                    </div>
+                                    </div> -->
 
 
                                     <div class="col-md-12 my-2">
-                                        <label for="address" class="form-label">ที่อยู่ :</label>
-                                        <textarea class="form-control" id="address" name="address" v-model="customer_store.form.data.address" rows="5"></textarea>                                    
+                                        <label for="address" class="form-label">ที่อยู่ <span class="text-danger">*</span> :</label>
+                                        <textarea class="form-control" id="address" required name="address" v-model="customer_store.form.data.address" rows="5"></textarea>                                    
                                     </div>
                                     
                                     <div class="col-md-12 my-2">
@@ -113,13 +118,25 @@ onMounted(async() => {
 
 });
 
+const validateIdCard = (event) => {
+  // กรองเฉพาะตัวเลข และจำกัดไม่เกิน 13 หลัก
+  const value = event.target.value.replace(/\D/g, ""); // ลบตัวอักษรที่ไม่ใช่ตัวเลข
+  customer_store.form.data.id_card = value.slice(0, 13); // จำกัดไม่เกิน 13 ตัวอักษร
+};
+
+const validateTel = (event) => {
+  // กรองเฉพาะตัวเลข และจำกัดไม่เกิน 13 หลัก
+  const value = event.target.value.replace(/\D/g, ""); // ลบตัวอักษรที่ไม่ใช่ตัวเลข
+  customer_store.form.data.tel = value.slice(0, 10); // จำกัดไม่เกิน 10 ตัวอักษร
+};
+
 const onSubmit = async () => {
     try {
-        const response  = await axios.post(customer_store.url.store_customer, customer_store.form.data)
+        const response  = await axios.post(customer_store.url.store_customer, customer_store.form.data,headers)
         if (response.status == 200) {
             await Swal.fire({
             icon: "success",
-            title: "success",
+            title: "สำเร็จ",
             text: response.message,
             }).then((result) => {
                 router.push('/app/customer');
@@ -129,7 +146,7 @@ const onSubmit = async () => {
         if (error.response.status == 500) {
             await Swal.fire({
             icon: "error",
-            title: "Oops...",
+            title: "เกิดข้อผิดพลาด...",
             text: error.response.data.message,
             });
         }

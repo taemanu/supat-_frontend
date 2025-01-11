@@ -5,6 +5,7 @@
 </style>
 <template>
   <main class="content">
+
     <div class="container-fluid p-0">
       <div class="d-flex justify-content-between m-2">
         <h1 class="h3 mb-3"><strong>ข้อมูลลูกค้า</strong></h1>
@@ -18,7 +19,9 @@
         <div class="col-12">
           <div class="card">
             <div class="card-body">
-              <div class="table-responsive">
+
+
+              <div class="table-responsive" v-if="loading">
                 <table class="mb-0 table table-bordered">
                   <thead>
                     <tr>
@@ -30,9 +33,9 @@
                       >
                         รหัสลูกค้า
                       </th>
-                      <th class="text-center align-middle" scope="col">
+                      <!-- <th class="text-center align-middle" scope="col">
                         รูปภาพประจำตัว
-                      </th>
+                      </th> -->
                       <th
                         class="text-center align-middle"
                         width="12%"
@@ -61,80 +64,76 @@
                     </tr>
                   </thead>
                   <tbody>
-                    <tr
-                      v-for="(list, index) in customer_store.data_list"
-                      :key="index"
-                    >
-                      <th class="text-center align-middle" scope="row">
-                        {{ index + 1 }}
-                      </th>
-                      <td class="text-center align-middle">
-                        {{ list.customer_code }}
-                      </td>
-                      <td class="text-center align-middle">
-                        <img
-                          src="../../assets/img/avatars/avatar-2.jpg"
-                          width="56"
-                          height="56"
-                          class="rounded-circle me-2"
-                          alt="Vanessa Tucker"
-                        />
-                      </td>
-                      <td class="text-left align-middle">
-                        {{ list.id_tax }}
-                      </td>
-                      <td class="text-left align-middle">
-                        {{ list.firstname + " " + list.lastname }}
-                      </td>
-                      <td class="text-center align-middle">
-                        {{ list.tel }}
-                      </td>
-                      <!-- <td class="text-center align-middle">
-													{{list.email}}
-												</td>
-												<td class="text-left align-middle">
-													{{list.address}}
-												</td> -->
-                      <td class="text-center align-middle">
-                        <div @click="change_status(list.id)">
-                          <span
-                            class="btn btn-success btn-equal-size"
-                            v-if="list.status == 'active'"
-                            >ใช้งาน</span
-                          >
-                          <span class="btn btn-danger btn-equal-size" v-else
-                            >ไม่ใช้งาน</span
-                          >
-                        </div>
-                      </td>
-                      <td class="text-center align-middle">
-                        <button
-                          type="button"
-                          class="btn btn-info m-1 btn-equal-size"
-                          data-bs-toggle="modal"
-                          data-bs-target="#viewUser"
-                        >
-                          <i class="bi bi-eye"></i>
-                          ดูข้อมูล
-                        </button>
+                  <!-- แสดงข้อมูลในกรณีที่มีข้อมูล -->
+                  <tr v-for="(list, index) in customer_store.data_list" :key="index" v-if="customer_store.data_list.length">
 
-                        <button
-                          type="button"
-                          class="btn btn-warning m-1 btn-equal-size"
+                    <th class="text-center align-middle" scope="row">
+                      {{ index + 1 }}
+                    </th>
+                    <td class="text-center align-middle">
+                      {{ list.customer_code }}
+                    </td>
+                    <!-- <td class="text-center align-middle">
+                      <img
+                        src="../../assets/img/avatars/avatar-2.jpg"
+                        width="56"
+                        height="56"
+                        class="rounded-circle me-2"
+                        alt="Vanessa Tucker"
+                      />
+                    </td> -->
+                    <td class="text-left align-middle">
+                      {{ list.id_tax }}
+                    </td>
+                    <td class="text-left align-middle">
+                      {{ list.firstname + " " + list.lastname }}
+                    </td>
+                    <td class="text-center align-middle">
+                      {{ list.tel }}
+                    </td>
+                    <td class="text-center align-middle">
+                      <div @click="change_status(list.id)">
+                        <span
+                          class="btn btn-success btn-equal-size"
+                          v-if="list.status == 'active'"
+                          >ใช้งาน</span
                         >
-                          <i class="bi bi-pencil-square"></i>
-                          แก้ไข
-                        </button>
+                        <span class="btn btn-danger btn-equal-size" v-else
+                          >ไม่ใช้งาน</span
+                        >
+                      </div>
+                    </td>
+                    <td class="text-center align-middle">
+                      <button
+                        type="button"
+                        class="btn btn-info m-1 btn-equal-size"
+                        data-bs-toggle="modal"
+                        data-bs-target="#viewUser"
+                      >
+                        <i class="bi bi-eye"></i>
+                        ดูข้อมูล
+                      </button>
 
-                        <!-- <router-link  class="btn btn-primary m-1 btn-equal-size" :to="{ path: '/app/Quotation/Create', query: { id: list.id , qt_id:list.id_qt} }" >
-                          <i class="bi bi-pencil-square"></i>
-                          ใบเสนอราคา
-                        </router-link> -->
-                      </td>
-                    </tr>
-                  </tbody>
+                      <button
+                        type="button"
+                        class="btn btn-warning m-1 btn-equal-size"
+                      >
+                        <i class="bi bi-pencil-square"></i>
+                        แก้ไข
+                      </button>
+                    </td>
+                  </tr>
+
+                  <!-- แสดงข้อความไม่พบข้อมูลในกรณีที่ไม่มีข้อมูล -->
+                  <tr v-else>
+                    <td class="text-center" colspan="7">ไม่พบข้อมูล</td>
+                  </tr>
+                </tbody>
                 </table>
               </div>
+
+              <SectionLoading v-else/>
+
             </div>
           </div>
         </div>
@@ -237,6 +236,7 @@ import Swal from "sweetalert2";
 
 const customer_store = customerStore();
 const router = useRouter();
+const loading = ref(true);
 
 const headers = {
   headers: {
@@ -246,7 +246,12 @@ const headers = {
 };
 
 onMounted(async () => {
-  await customer_store.getDataList();
+  try {
+    loading.value = false
+    await customer_store.getDataList();
+  } finally {
+    await setTimeout((loading.value = true))
+  }
 });
 
 const change_status = async (id_customer) => {
@@ -263,6 +268,9 @@ const change_status = async (id_customer) => {
 
   if (result.isConfirmed) {
     try {
+
+      loading.value = false
+
       const response = await axios.post(customer_store.url.change_status, {
         id_customer,
       });
@@ -270,7 +278,7 @@ const change_status = async (id_customer) => {
       if (response.status === 200) {
         Swal.fire({
           icon: "success",
-          title: "Success",
+          title: "สำเร็จ",
           text: response.data.message,
         });
       }
@@ -278,18 +286,19 @@ const change_status = async (id_customer) => {
       if (error.response && error.response.status === 500) {
         Swal.fire({
           icon: "error",
-          title: "Oops...",
+          title: "เกิดข้อผิดพลาด...",
           text: error.response.data.message,
         });
       } else {
         Swal.fire({
           icon: "error",
-          title: "Oops...",
+          title: "เกิดข้อผิดพลาด...",
           text: "Something went wrong!",
         });
       }
     } finally {
-      customer_store.getDataList();
+      await customer_store.getDataList();
+      await setTimeout((loading.value = true))
     }
   }
 };
