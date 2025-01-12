@@ -38,7 +38,7 @@ export default {
     // const currentPath = ref(route.currentRoute.value.path);
     const menu = [
       {
-        name: "จำนวณผู้ใช้งานในระบบ",
+        name: "หน้าแรก",
         icon: "bi bi-kanban-fill",
         url: "/app/ProjectCustomerList",
       },

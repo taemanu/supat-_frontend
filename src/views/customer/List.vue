@@ -41,9 +41,6 @@
                       >
                         รหัสผู้ใช้งาน
                       </th>
-                      <!-- <th class="text-center align-middle" scope="col">
-                        รูปภาพประจำตัว
-                      </th> -->
                       <th
                         class="text-center align-middle"
                         width="12%"
@@ -84,15 +81,6 @@
                     <td class="text-center align-middle">
                       {{ list.user_id }}
                     </td>
-                    <!-- <td class="text-center align-middle">
-                      <img
-                        src="../../assets/img/avatars/avatar-2.jpg"
-                        width="56"
-                        height="56"
-                        class="rounded-circle me-2"
-                        alt="Vanessa Tucker"
-                      />
-                    </td> -->
                     <td class="text-left align-middle">
                       {{ list.id_tax }}
                     </td>
@@ -118,20 +106,18 @@
                       <button
                         type="button"
                         class="btn btn-info m-1 btn-equal-size"
-                        data-bs-toggle="modal"
-                        data-bs-target="#viewUser"
+                        @click="openModal(list)"
                       >
                         <i class="bi bi-eye"></i>
                         ดูข้อมูล
                       </button>
 
-                      <button
-                        type="button"
-                        class="btn btn-warning m-1 btn-equal-size"
-                      >
-                        <i class="bi bi-pencil-square"></i>
-                        แก้ไข
-                      </button>
+
+                      <router-link  class="btn btn-primary m-1 btn-equal-size" :to="{ path: '/app/FormCustomer', query: { data: JSON.stringify(list) } }" >
+                          <i class="bi bi-pencil-square"></i>
+                          แก้ไขข้อมูล
+                      </router-link>
+
                     </td>
                   </tr>
 
@@ -150,85 +136,96 @@
         </div>
 
         <!-- Modal -->
-        <div
-          class="modal fade"
-          id="viewUser"
-          tabindex="-1"
-          aria-labelledby="viewUserLabel"
-          aria-hidden="true"
-        >
+        <div class="modal fade" id="viewUser" tabindex="-1" aria-labelledby="viewUserLabel" aria-hidden="true">
           <div class="modal-dialog modal-lg">
             <div class="modal-content">
               <div class="modal-header">
-                <h5 class="modal-title" id="viewUserLabel">Modal title</h5>
-                <button
-                  type="button"
-                  class="btn-close"
-                  data-bs-dismiss="modal"
-                  aria-label="Close"
-                ></button>
+                <h5 class="modal-title" id="viewUserLabel">รายละเอียดลูกค้า</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
               </div>
-              <div class="modal-body px-auto">
+              <div class="modal-body">
                 <div class="row mb-2">
-                  <div class="text-center col-md-12">
-                    <img
-                      src="../../assets/img/avatars/avatar-2.jpg"
-                      width="86"
-                      height="86"
-                      class="rounded-circle me-2"
-                      alt="Vanessa Tucker"
-                    />
+                  <!-- เลขประจำตัวผู้เสียภาษี -->
+                  <div class="col-md-6 my-2">
+                    <label for="id-tax" class="form-label">เลขประจำตัวผู้เสียภาษี :</label>
+                    <input type="text" id="id-tax" class="form-control" :value="selectedCustomer?.id_tax || '-'" disabled />
                   </div>
+
+                  <!-- รหัสลูกค้า -->
+                  <div class="col-md-6 my-2">
+                    <label for="customer-code" class="form-label">รหัสลูกค้า :</label>
+                    <input type="text" id="customer-code" class="form-control" :value="selectedCustomer?.customer_code || '-'" disabled />
+                  </div>
+
                 </div>
                 <div class="row mb-2">
-                  <div class="col-md-4 my-2">
-                    <label for="id-card" class="form-label"
-                      >เลขประจำตัวประชาชน :</label
-                    >
-                    <input
-                      type="text"
-                      id="id-card"
-                      class="form-control"
-                      aria-describedby="id-card-HelpBlock"
-                      disabled
-                      value="-"
-                    />
+                  <!-- ชื่อ -->
+                  <div class="col-md-6 my-2">
+                    <label for="first-name" class="form-label">ชื่อจริง :</label>
+                    <input type="text" id="first-name" class="form-control" :value="selectedCustomer?.firstname || '-'" disabled />
                   </div>
-                  <div class="col-md-4 my-2">
-                    <label for="first-name" class="form-label"
-                      >ชื่อจริง :</label
-                    >
-                    <input
-                      type="text"
-                      id="first-name"
-                      class="form-control"
-                      aria-describedby="first-name-HelpBlock"
-                      disabled
-                      value="-"
-                    />
-                  </div>
-                  <div class="col-md-4 my-2">
+                  <!-- นามสกุล -->
+                  <div class="col-md-6 my-2">
                     <label for="last-name" class="form-label">นามสกุล :</label>
-                    <input
-                      type="text"
-                      id="last-name"
-                      class="form-control"
-                      aria-describedby="last-name-HelpBlock"
-                      disabled
-                      value="-"
-                    />
+                    <input type="text" id="last-name" class="form-control" :value="selectedCustomer?.lastname || '-'" disabled />
+                  </div>
+                </div>
+                <div class="row mb-2">
+                  <!-- เบอร์โทรศัพท์ -->
+                  <div class="col-md-6 my-2">
+                    <label for="tel" class="form-label">เบอร์โทรศัพท์ :</label>
+                    <input type="text" id="tel" class="form-control" :value="selectedCustomer?.tel || '-'" disabled />
+                  </div>
+                  <!-- อีเมล -->
+                  <div class="col-md-6 my-2">
+                    <label for="email" class="form-label">อีเมล :</label>
+                    <input type="text" id="email" class="form-control" :value="selectedCustomer?.email || '-'" disabled />
+                  </div>
+                </div>
+                <div class="row mb-2">
+                  <!-- Line ID -->
+                  <div class="col-md-6 my-2">
+                    <label for="line-id" class="form-label">Line ID :</label>
+                    <input type="text" id="line-id" class="form-control" :value="selectedCustomer?.line_id || '-'" disabled />
+                  </div>
+                  <!-- สถานะ -->
+                  <div class="col-md-6 my-2">
+                    <label for="status" class="form-label">สถานะ :</label>
+                    <input type="text" id="status" class="form-control" :value="selectedCustomer?.status === 'active' ? 'ใช้งาน' : 'ไม่ใช้งาน'"  disabled />
+                  </div>
+                </div>
+                <div class="row mb-2">
+                  <!-- ที่อยู่ -->
+                  <div class="col-md-6 my-2">
+                    <label for="address" class="form-label">ที่อยู่ :</label>
+                    <textarea id="address" class="form-control" rows="3" :value="selectedCustomer?.address || '-'" disabled></textarea>
+                  </div>
+                                    <!-- หมายเหตุ -->
+                  <div class="col-md-6 my-2">
+                    <label for="remark" class="form-label">หมายเหตุ :</label>
+                    <textarea id="address" class="form-control" rows="3" :value="selectedCustomer?.remark || '-'" disabled></textarea>
+                  </div>
+                </div>
+
+                <hr>
+
+                <div class="row mb-2">
+                  <!-- รหัสผู้ใช้งาน -->
+                  <div class="col-md-6 my-2">
+                    <label for="user-id" class="form-label">รหัสผู้ใช้งาน :</label>
+                    <input type="text" id="user-id" class="form-control" :value="selectedCustomer?.user_id || '-'" disabled />
+                  </div>
+
+                  <div class="col-md-6 my-2">
+                    <label for="user-id" class="form-label">รหัสผ่าน :</label>
+                    <input type="text" id="user-id" class="form-control" :value="selectedCustomer?.password_user || '-'" disabled />
                   </div>
                 </div>
               </div>
+
+
               <div class="modal-footer">
-                <button
-                  type="button"
-                  class="btn btn-secondary"
-                  data-bs-dismiss="modal"
-                >
-                  Close
-                </button>
-                <!-- <button type="button" class="btn btn-primary">Save changes</button> -->
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">ปิด</button>
               </div>
             </div>
           </div>
@@ -248,6 +245,8 @@ import Swal from "sweetalert2";
 const customer_store = customerStore();
 const router = useRouter();
 const loading = ref(true);
+
+const selectedCustomer = ref(null);
 
 const headers = {
   headers: {
@@ -313,6 +312,16 @@ const change_status = async (id_customer) => {
     }
   }
 };
+
+
+const openModal = async (customer) => {
+
+  console.log(customer);
+  selectedCustomer.value = customer;
+  const modal = new bootstrap.Modal(document.getElementById('viewUser'));
+
+  modal.show();
+}
 </script>
 <style>
 </style>

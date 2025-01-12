@@ -2,7 +2,7 @@
     <div class="content">
         <div class="container-fluid p-0 ">
             <div class="d-flex justify-content-between m-2" >
-                <h1 class="h3 mb-3"><strong>เพิ่ม/แก้ไข ลูกค้า</strong></h1>
+                <h1 class="h3 mb-3"><strong>เพิ่ม/แก้ไข ลูกค้า <span v-if="edit_data">{{ customer_data.customer_code }}</span></strong></h1>
             </div>
             <div class="row">
                 <div class="col-12">
@@ -101,12 +101,16 @@
 import { ref, reactive, computed, watch ,onMounted } from "vue";
 import { userAuthStore } from "@/stores/models/userAuthStore";
 import { customerStore } from "@/stores/models/customerStore";
-import { useRouter } from "vue-router";
+import { useRouter, useRoute } from "vue-router";
 import axios from "axios";
 import Swal from "sweetalert2";
 
 const customer_store = customerStore();
 const router = useRouter();
+const route = useRoute();
+
+const customer_data = ref([]);
+const edit_data = ref(false);
 
 const headers = {
     headers: {
@@ -120,16 +124,41 @@ const loading = ref(true);
 onMounted(async() => {
 
     try {
-    loading.value = false
     
-    customer_store.form.data.id_card = '';
-    customer_store.form.data.firstname = '';
-    customer_store.form.data.lastname = '';
-    customer_store.form.data.tel = '';
-    customer_store.form.data.email = '';
-    customer_store.form.data.address = '';
-    customer_store.form.data.line_id = '';
-    customer_store.form.data.note = '';
+    const data = route.query.data ? JSON.parse(route.query.data) : null;
+    customer_data.value = data;   
+
+
+    loading.value = false
+    if (customer_data.value) {
+
+        edit_data.value = true;
+
+        customer_store.form.data.id_customer = customer_data.value.id || '';
+        customer_store.form.data.id_card = customer_data.value.id_tax || '';
+        customer_store.form.data.firstname = customer_data.value.firstname || '';
+        customer_store.form.data.lastname = customer_data.value.lastname || '';
+        customer_store.form.data.tel = customer_data.value.tel || '';
+        customer_store.form.data.email = customer_data.value.email || '';
+        customer_store.form.data.address = customer_data.value.address || '';
+        customer_store.form.data.line_id = customer_data.value.line_id || '';
+        customer_store.form.data.note = customer_data.value.remark || '';
+        customer_store.form.data.status = customer_data.value.status == 'inactive' ? '2' : '1';
+    } else {
+    customer_store.form.data = {
+        id_customer : "",
+        id_card : "",
+        firstname : "",
+        lastname : "",
+        tel : "",
+        email : "",
+        status : 1,
+        address : "",
+        line_id : "",
+        note : "",
+    };
+}
+    
 
   } finally {
     await setTimeout((loading.value = true))
@@ -151,7 +180,10 @@ const validateTel = (event) => {
 
 const onSubmit = async () => {
     try {
-        const response  = await axios.post(customer_store.url.store_customer, customer_store.form.data,headers)
+
+        console.log(customer_store.form.data);
+
+        const response  = edit_data ? await axios.post(customer_store.url.edit_customer, customer_store.form.data,headers) : await axios.post(customer_store.url.store_customer, customer_store.form.data,headers)
         if (response.status == 200) {
             await Swal.fire({
             icon: "success",

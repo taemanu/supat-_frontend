@@ -37,6 +37,11 @@ export default {
     const route = useRouter();
     // const currentPath = ref(route.currentRoute.value.path);
     const menu = [
+    {
+        name: "หน้าแรก (ลูกค้า)",
+        icon: "bi bi-newspaper",
+        url: "/app/Customer/CustomerProjectType",
+      },
       {
         name: "แบบงาน",
         icon: "bi bi-person",
