@@ -9,6 +9,10 @@ import authentication from "@/middleware/authentication";
 import Customer from "../views/customer/List.vue";
 import FormCustomer from "../views/customer/FormCustomer.vue";
 
+import EmployeeList from "../views/employee/EmployeeList.vue";
+import FormEmployee from "../views/employee/FormEmployee.vue";
+
+
 import ProjectList from "../views/project/ProjectList.vue";
 import FormProject from "../views/project/FormProject.vue";
 import ProjectMaterialList from "../views/project/ProjectMaterialList.vue";
@@ -23,7 +27,6 @@ import MaterialOrder from "../views/materialorder/MaterialOrderList.vue";
 import MonthlyEmployeeReport from "../views/employee/MonthlyEmployeeReport.vue";
 import Quotation from "../views/customer/Quotation.vue";
 import FinancialList from "../views/financial/FinancialList.vue";
-import EmployeeList from "../views/employee/EmployeeList.vue";
 import FormQuotation from "../views/quotation/FormQuotation.vue";
 import Compensation from "../views/employee/Compensation.vue";
 
@@ -154,6 +157,11 @@ const routes = [
         path: "/app/EmployeeList",
         name: "EmployeeList",
         component: EmployeeList,
+      },
+      {
+        path: "/app/FormEmployee",
+        name: "FormEmployee",
+        component: FormEmployee,
       },
 
       {

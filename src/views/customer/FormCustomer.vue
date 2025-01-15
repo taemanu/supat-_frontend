@@ -183,7 +183,7 @@ const onSubmit = async () => {
 
         console.log(customer_store.form.data);
 
-        const response  = edit_data ? await axios.post(customer_store.url.edit_customer, customer_store.form.data,headers) : await axios.post(customer_store.url.store_customer, customer_store.form.data,headers)
+        const response  = edit_data.value ? await axios.post(customer_store.url.edit_customer, customer_store.form.data,headers) : await axios.post(customer_store.url.store_customer, customer_store.form.data,headers)
         if (response.status == 200) {
             await Swal.fire({
             icon: "success",
