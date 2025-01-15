@@ -176,7 +176,7 @@ onMounted(async() => {
 
         edit_data.value = true;
 
-        employee_store.form.data.id_employee = employee_data.value.id_employee || '';
+        employee_store.form.data.id_employee = employee_data.value.id || '';
         employee_store.form.data.id_card = employee_data.value.id_card || '';
         employee_store.form.data.firstname = employee_data.value.firstname || '';
         employee_store.form.data.lastname = employee_data.value.lastname || '';
