@@ -40,7 +40,7 @@ export default {
       {
         name: "คำขอโครงการ",
         icon: "bi bi-person",
-        url: "/app/customer",
+        url: "/app/Manage/RequestProject",
       },
       {
         name: "ใบเสนอราคา",
@@ -55,12 +55,12 @@ export default {
       {
         name: "ข้อมูลลูกค้า",
         icon: "bi bi-kanban-fill",
-        url: "/app/ProjectCustomerList",
+        url: "/app/customer",
       },
       {
         name: "ข้อมูลพนักงาน",
         icon: "bi bi-card-checklist",
-        url: "/app/materialorderList",
+        url: "/app/EmployeeList",
       },      
       
     ];

@@ -12,10 +12,14 @@ export const userAuthStore = defineStore("userAuthStore", {
       auth_refresh: `${import.meta.env.VITE_API_URL}/auth/refresh`,
       auth_logout: `${import.meta.env.VITE_API_URL}/auth/logout`,
       page_login: "/",
+
+
+      list_user: `${import.meta.env.VITE_API_URL}/auth/get-data-list`,
     },
     access_token: localStorage.getItem("access_token"),
     user: JSON.parse(localStorage.getItem("user")),
-    permissions : null
+    permissions : null,
+    data_list:{}
   }),
 
   actions: {
@@ -108,5 +112,10 @@ export const userAuthStore = defineStore("userAuthStore", {
       router.push(this.url.page_login || "/");
       window.location.reload();
     },
+    async getDataList(){
+      const data  = await axios.get(this.url.list_user);
+
+      this.data_list = data.data.data
+  }
   },
 });

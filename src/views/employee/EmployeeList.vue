@@ -87,7 +87,10 @@
                       {{ list.firstname + ' ' + list.lastname }}
                     </td>
                     <td class="text-center align-middle">
-                      {{ list.position }}
+                      <span v-if="list.position == 'manager'">ผู้จัดการ</span>
+                      <span v-if="list.position == 'account'">บัญชี</span>
+                      <span v-if="list.position == 'ceo'">ซีอีโอ</span>
+                      <span v-if="list.position == 'emp'">พนักงาน</span>
                     </td>
                     <td class="text-center align-middle">
                       {{ list.tel }}

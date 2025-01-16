@@ -10,160 +10,226 @@
                 <h1 class="h3 mb-3"><strong>ผู้ใช้งานระบบ</strong></h1>
                 <!-- <router-link class="btn btn-success" ><i class="fas fa-check"></i> เพิ่มข้อมูล</router-link> -->
 
-				<router-link class="btn btn-success pt-2" to="/app/FormUser">
+				<!-- <router-link class="btn btn-success pt-2" to="/app/FormUser">
                 	<i class="fas fa-check"></i>เพิ่มข้อมูล
-				</router-link>
+				</router-link> -->
             </div>
             <div class="row">
                 <div class="col-12">
                     <div class="card">
 
-                        <div class="card-body">
-                            <div class="table-responsive">
+                        <div class="card-body" >
+                            <div class="table-responsive" v-if="loading">
 									<table class="mb-0 table table-bordered">
 										<thead>
 											<tr>
 												<th class="text-center align-middle" scope="col">#</th>
-												<th class="text-center align-middle" scope="col">รูปภาพประจำตัว</th>
-												<th class="text-center align-middle" scope="col">รหัสสมาชิก</th>
+												<!-- <th class="text-center align-middle" scope="col">รูปภาพประจำตัว</th> -->
+												<th class="text-center align-middle" scope="col">รหัสผู้ใช้งาน	</th>
 												<th class="text-center align-middle" width="25%" scope="col">ชื่อ - นามสกุล</th>
-												<th class="text-center align-middle" scope="col">ตำแหน่ง</th>
 												<th class="text-center align-middle" scope="col">สิทธ์การใช้งาน</th>
+												<th class="text-center align-middle" scope="col">วันที่สร้าง</th>
 												<th class="text-center align-middle" scope="col">สถานะ</th>
 												<th class="text-center " width="15%" scope="col">จัดการ</th>
 	
 											</tr>
 										</thead>
 										<tbody>
-											<tr>
+											<tr v-for="(list, index) in user_store.data_list" :key="index" >
 												<th class="text-center align-middle" scope="row">
-													1
+												{{ index + 1}}
 												</th>
-												<td class="text-center align-middle">
-													<img src="../../assets/img/avatars/avatar-2.jpg" width="56" height="56" class="rounded-circle me-2" alt="Vanessa Tucker">
+												<td class="text-center align-middle" scope="row">
+													{{ list.user_id }}
 												</td>
-												<td class="text-center align-middle">
-													SP-001
+												<td class="text-center align-middle" scope="row">
+													{{ list.name }}
 												</td>
-												<td class="text-left align-middle">
-													นาย ภานุพงษ์ เทพเมือง
+												<td class="text-center align-middle" scope="row">
+													{{ list.role }}
 												</td>
-												<td class="text-center align-middle">
-													ผู้จัดการ
+												<td class="text-center align-middle" scope="row">
+													{{ formatThaiDate(list.created_at) }}
 												</td>
-												<td class="text-center align-middle">
-													ผู้ดูแลระบบ
+												<td class="text-center align-middle" scope="row">
+													<span
+													class="btn btn-success btn-equal-size"
+													v-if="list.status == 'active'"
+													>ใช้งาน</span
+													>
+													<span class="btn btn-danger btn-equal-size" v-else
+													>ไม่ใช้งาน</span
+													>
 												</td>
-												<td class="text-center align-middle">
-													<span class="btn btn-success">ปกติ</span>
-												</td>
-												<td class="text-center align-middle">
 
-													<button type="button" class="btn btn-info m-1 btn-equal-size" data-bs-toggle="modal" data-bs-target="#viewUser">
-														<i class="bi bi-eye"></i>
-														ดูข้อมูล
-													</button>
-
-													<button type="button" class="btn btn-warning m-1 btn-equal-size">
-														<i class="bi bi-pencil-square"></i>
-														แก้ไข
+												<td class="text-center align-middle">
+													<button type="button" class="btn btn-info m-1 btn-equal-size" @click="openModal(list)">
+														<i class="bi bi-pencil-square"></i> แก้ไขข้อมูล
 													</button>
 												</td>
+	
 											</tr>
 
-											<tr>
-												<th class="text-center align-middle" scope="row">
-													2
-												</th>
-												<td class="text-center align-middle">
-													<img src="../../assets/img/avatars/avatar-3.jpg" width="56" height="56" class="rounded-circle me-2" alt="Vanessa Tucker">
-												</td>
-												<td class="text-center align-middle">
-													SP-002
-												</td>
-												<td class="text-left align-middle">
-													นาย ภูวนาถ จิตรีเชื้อ
-												</td>
-												<td class="text-center align-middle">
-													พนักงาน
-												</td>
-												<td class="text-center align-middle">
-													สมาชิก
-												</td>
-												<td class="text-center align-middle">
-													<span class="btn btn-success">ปกติ</span>
-												</td>
-												<td class="text-center align-middle">
-
-													<button type="button" class="btn btn-info m-1 btn-equal-size" data-bs-toggle="modal" data-bs-target="#viewUser">
-														<i class="bi bi-eye"></i>
-														ดูข้อมูล
-													</button>
-
-													<button type="button" class="btn btn-warning m-1 btn-equal-size">
-														<i class="bi bi-pencil-square"></i>
-														แก้ไข
-													</button>
-												</td>
-											</tr>
+											<!-- <tr v-else>
+												<td class="text-center" colspan="10">ไม่พบข้อมูล</td>
+											</tr> -->
 										</tbody>
 									</table>
 							</div>
+							<SectionLoading v-else/>
                         </div>
                     </div>
                 </div>
 
-
-				<!-- Modal -->
-				<div class="modal fade" id="viewUser" tabindex="-1" aria-labelledby="viewUserLabel" aria-hidden="true">
-					<div class="modal-dialog modal-lg">
-						<div class="modal-content">
+				<div class="modal fade" id="editUserModal" tabindex="-1" aria-labelledby="editUserModalLabel" aria-hidden="true">
+					<div class="modal-dialog">
+					<div class="modal-content">
 						<div class="modal-header">
-							<h5 class="modal-title" id="viewUserLabel">Modal title</h5>
-							<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+						<h5 class="modal-title" id="editUserModalLabel">แก้ไขข้อมูลผู้ใช้</h5>
+						<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 						</div>
-						<div class="modal-body px-auto">
-							<div class="row mb-2">
-								<div class="text-center col-md-12">
-									<img src="../../assets/img/avatars/avatar-2.jpg" width="86" height="86" class="rounded-circle me-2" alt="Vanessa Tucker">
-								</div>
+
+						<div class="modal-body">
+							<form @submit.prevent="handleSubmit">
+							<div class="mb-3">
+							<label class="form-label">สถานะ:</label>
+							<select v-model="editedUser.status" class="form-select">
+								<option value="active">ใช้งาน</option>
+								<option value="inactive">ปิดการใช้งาน</option>
+							</select>
 							</div>
-							<div class="row mb-2">
-
-								<div class="col-md-4 my-2">
-									<label for="id-card" class="form-label">เลขประจำตัวประชาชน :</label>
-									<input type="text" id="id-card" class="form-control" aria-describedby="id-card-HelpBlock" disabled value="-">
-								</div>
-								<div class="col-md-4 my-2">
-									<label for="first-name" class="form-label">ชื่อจริง :</label>
-									<input type="text" id="first-name" class="form-control" aria-describedby="first-name-HelpBlock" disabled value="-">
-								</div>
-								<div class="col-md-4 my-2">
-									<label for="last-name" class="form-label">นามสกุล :</label>
-									<input type="text" id="last-name" class="form-control" aria-describedby="last-name-HelpBlock" disabled value="-">
-								</div>
-
-								
-
-
+							
+							<div class="mb-3">
+							<label class="form-label">User ID:</label>
+							<input type="text" class="form-control" v-model="editedUser.user_id">
 							</div>
+							
+							<div class="mb-3">
+							<label class="form-label">รหัสผ่าน:</label>
+							<input type="password" class="form-control" v-model="editedUser.password_user">
+							</div>
+							
+							<!-- <div class="mb-3">
+							<label class="form-label">บทบาท:</label>
+							<select v-model="editedUser.role" class="form-select">
+								<option value="admin">Admin</option>
+								<option value="manager">Manager</option>
+								<option value="user">User</option>
+							</select>
+							</div>  -->
+							
+							<div class="modal-footer">
+							<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">ยกเลิก</button>
+							<button type="submit" class="btn btn-primary">บันทึก</button>
+							</div>
+						</form>
 						</div>
-						<div class="modal-footer">
-							<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-							<!-- <button type="button" class="btn btn-primary">Save changes</button> -->
-						</div>
-						</div>
+
+
+
 					</div>
 				</div>
 
-            </div>
+			<!-- <div class="modal fade" id="editUserModal" tabindex="-1" aria-labelledby="editUserModalLabel" aria-hidden="true">
+				<div class="modal-dialog">
+					<div class="modal-content">
+						<div class="modal-header">
+						<h5 class="modal-title" id="editUserModalLabel">แก้ไขข้อมูลผู้ใช้</h5>
+						<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+						</div>
+						<div class="modal-body">
+						<form @submit.prevent="handleSubmit">
+							<div class="mb-3">
+							<label class="form-label">สถานะ:</label>
+							<select v-model="editedUser.status" class="form-select">
+								<option value="active">ใช้งาน</option>
+								<option value="inactive">ปิดการใช้งาน</option>
+							</select>
+							</div>
+							
+							<div class="mb-3">
+							<label class="form-label">User ID:</label>
+							<input type="text" class="form-control" v-model="editedUser.user_id">
+							</div>
+							
+							<div class="mb-3">
+							<label class="form-label">รหัสผ่าน:</label>
+							<input type="password" class="form-control" v-model="editedUser.password_user">
+							</div>
+							
+							<div class="mb-3">
+							<label class="form-label">บทบาท:</label>
+							<select v-model="editedUser.role" class="form-select">
+								<option value="admin">Admin</option>
+								<option value="manager">Manager</option>
+								<option value="user">User</option>
+							</select>
+							</div> 
+							
+							<div class="modal-footer">
+							<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">ยกเลิก</button>
+							<button type="submit" class="btn btn-primary">บันทึก</button>
+							</div>
+						</form>
+						</div>
+					</div>
+				</div>
+			</div> -->
 
-
-
+        </div>
+        </div>
         </div>
     </main>
 </template>
 <script setup>
+import { ref, reactive, computed, watch, onMounted } from "vue";
+import { userAuthStore } from "@/stores/models/userAuthStore";
+import { useRouter } from "vue-router";
+import axios from "axios";
+import Swal from "sweetalert2";
+import { 
+  formatThaiDate, 
+  formatPrice,
+  validateMoneyInput,
+  formatMoney
+} from '@/utils/basefunction'
+
+const user_store = userAuthStore();
+const loading = ref(true);
+
+const emit = defineEmits(['update'])
+const editedUser = ref({
+  status: '',
+  user_id: '',
+  password_user: '',
+  role: ''
+})
+let modal = null
+
+onMounted(async () => {
+  try {
+    loading.value = false
+    await user_store.getDataList();
+
+  } finally {
+    await setTimeout((loading.value = true))
+  }
+});
+
+const openModal = (userData) => {
+  
+editedUser.value = {
+    status: userData.status,
+    user_id: userData.user_id,
+    password_user: userData.password_user,
+    role: userData.role
+  }
+
+  const modal = new bootstrap.Modal(document.getElementById('editUserModal'));
+
+  modal.show();
+}
+
 </script>
 <style>
     

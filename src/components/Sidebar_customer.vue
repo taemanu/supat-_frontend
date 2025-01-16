@@ -45,7 +45,7 @@ export default {
       {
         name: "แบบงาน",
         icon: "bi bi-person",
-        url: "/app/customer",
+        url: "/app/Customer/CustomerWorkType",
       },
       {
         name: "ใบเสนอราคา",
@@ -55,7 +55,7 @@ export default {
       {
         name: "สัญญาจ้าง",
         icon: "bi bi-kanban-fill",
-        url: "/app/ProjectList",
+        url: "/app/Customer/CustomerContract",
       },
       {
         name: "ข้อมูลโครงการ",

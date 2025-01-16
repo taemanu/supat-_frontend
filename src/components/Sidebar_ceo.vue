@@ -40,17 +40,17 @@ export default {
       {
         name: "แดชบอร์ด",
         icon: "bi bi-person",
-        url: "/app/customer",
+        url: "/app/dashboard",
       },
       {
         name: "ข้อมูลโครงการ",
         icon: "bi bi-receipt",
-        url: "/app/Quotation",
+        url: "/app/ProjectList",
       },
       {
         name: "รายงานการเงิน",
         icon: "bi bi-kanban-fill",
-        url: "/app/ProjectList",
+        url: "/app/MonthlyEmployeeReport",
       },
               
     ];

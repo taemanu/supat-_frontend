@@ -49,7 +49,7 @@
                                     </div>
                                     <div class="col-md-4 my-2">
                                         <label for="tel" class="form-label">เบอร์โทร <span class="text-danger">*</span> :</label>
-                                        <input type="text" id="tel" required name="tel" v-model="employee_store.form.data.tel" class="form-control">
+                                        <input type="text" id="tel" required name="tel" v-model="employee_store.form.data.tel" class="form-control" @input="validateTel">
                                     </div>
                                     <div class="col-md-4 my-2">
                                         <label for="email" class="form-label">อีเมล์ <span class="text-danger">*</span> :</label>

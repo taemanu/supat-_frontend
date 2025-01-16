@@ -40,7 +40,7 @@ export default {
       {
         name: "หน้าแรก",
         icon: "bi bi-kanban-fill",
-        url: "/app/ProjectCustomerList",
+        url: "/app/dashboard",
       },
       {
         name: "จัดการข้อมูลลูกค้า",
@@ -57,36 +57,37 @@ export default {
         icon: "bi bi-kanban-fill",
         url: "/app/user",
       },
-      /*{
+      
+      {
         name: "ใบสั่งซื้อวัสดุ (บัญชี)",
         icon: "bi bi-card-checklist",
         url: "/app/materialorderList",
       },      
-      // {
-      //   name: "ผู้ใช้งานระบบ",
-      //   icon: "bi bi-people",
-      //   url: "/app/user",
-      // },
-      // {
-        //   name: "โปรไฟล์",
-      //   icon: "bi bi-person-lines-fill",
-      //   url: "/app/profile",
-      // },
-      // {
-      //   name: "ประเภทวัสดุ",
-      //   icon: "bi bi-boxes",
-      //   url: "/app/listCate",
-      // },
-      // {
-      //   name: "วัสดุ",
-      //   icon: "bi bi-box-seam-fill",
-      //   url: "#",
-      // },
-      // {
-      //   name: "จัดการคลังวัสดุ",
-      //   icon: "bi bi-database",
-      //   url: "#",
-      // },
+      {
+        name: "ผู้ใช้งานระบบ",
+        icon: "bi bi-people",
+        url: "/app/user",
+      },
+      {
+          name: "โปรไฟล์",
+        icon: "bi bi-person-lines-fill",
+        url: "/app/profile",
+      },
+      {
+        name: "ประเภทวัสดุ",
+        icon: "bi bi-boxes",
+        url: "/app/listCate",
+      },
+      {
+        name: "วัสดุ",
+        icon: "bi bi-box-seam-fill",
+        url: "#",
+      },
+      {
+        name: "จัดการคลังวัสดุ",
+        icon: "bi bi-database",
+        url: "#",
+      },
       {
         name: "ข้อมูลพนักงาน (บัญชี)",
         icon: "bi bi-person-lines-fill",
@@ -135,7 +136,7 @@ export default {
         icon: "bi bi-newspaper",
         url: "",
       }, 
-      */     
+    
     ];
     function resetMenu(key) {
       let el = document.querySelectorAll(".sidebar-item");

@@ -32,9 +32,18 @@ import Compensation from "../views/employee/Compensation.vue";
 
 //ลูกค้า
 import CustomerProjectType from "../views/customer/CustomerProjectType.vue";
+import CustomerWorkType from "../views/customer/CustomerWorkType.vue";
+import CustomerContract from "../views/customer/CustomerContract.vue";
 import CustomerQuotationList from "../views/customer/CustomerQuotationList.vue";
 import FormApproveQuotation from "../views/customer/FormApproveQuotation.vue";
 import FormCustomerProjectGarageType from "../views/customer/FormCustomerProjectGarageType.vue";
+
+import RequestProject from "../views/manage/RequestProject.vue";
+
+import ProjectCosts from "../views/financial/ProjectCosts.vue";
+
+
+
 
 const routes = [
   {
@@ -177,6 +186,16 @@ const routes = [
         component: CustomerProjectType,
       },
       {
+        path: "/app/Customer/CustomerWorkType",
+        name: "CustomerWorkType",
+        component: CustomerWorkType,
+      },
+      {
+        path: "/app/Customer/CustomerContract",
+        name: "CustomerContract",
+        component: CustomerContract,
+      },
+      {
         path: "/app/Customer/CustomerQuotationList",
         name: "CustomerQuotationList",
         component: CustomerQuotationList,
@@ -190,6 +209,22 @@ const routes = [
         path: "/app/Customer/CustomerProjectGarageType/detail/:id",
         name: "FormCustomerProjectGarageType",
         component: FormCustomerProjectGarageType,
+      },
+
+
+      
+      //ผู้จัดการ
+      {
+        path: "/app/Manage/RequestProject",
+        name: "RequestProject",
+        component: RequestProject,
+      },
+      
+      //บัญชี
+      {
+        path: "/app/account/ProjectCosts",
+        name: "ProjectCosts",
+        component: ProjectCosts,
       },
     ],
   },

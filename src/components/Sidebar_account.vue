@@ -40,27 +40,27 @@ export default {
       {
         name: "สัญญาจ้าง",
         icon: "bi bi-person",
-        url: "/app/customer",
+        url: "/app/Customer/CustomerQuotationList",
       },
       {
         name: "ค่าใช้จ่ายโครงการ",
         icon: "bi bi-receipt",
-        url: "/app/Quotation",
+        url: "/app/account/ProjectCosts",
       },
       {
         name: "จัดการเงินเดือน",
         icon: "bi bi-kanban-fill",
-        url: "/app/ProjectList",
+        url: "/app/FinancialList",
       },
       {
         name: "ข้อมูลลูกค้า",
         icon: "bi bi-kanban-fill",
-        url: "/app/ProjectCustomerList",
+        url: "/app/customer",
       },
       {
         name: "ข้อมูลพนักงาน",
         icon: "bi bi-card-checklist",
-        url: "/app/materialorderList",
+        url: "/app/EmployeeList",
       },          
     ];
     function resetMenu(key) {
